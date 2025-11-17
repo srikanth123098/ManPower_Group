@@ -26,9 +26,9 @@ function computeStatusFromRecord(record) {
   if (!record || !record.submittedAt) return 'Not submitted';
   const submitted = new Date(record.submittedAt);
   const now = new Date();
-  const diffDays = (now - submitted) / (1000 * 60 * 60 * 24);
-  if (diffDays >= 3) return 'Verified';
-  if (diffDays >= 2) return 'Pending';
+  const diffMinutes = (now - submitted) / (1000 * 60);
+  if (diffMinutes >= 2) return 'Verified';
+  if (diffMinutes >= 1) return 'Pending';
   return 'Submitted';
 }
 
@@ -681,4 +681,5 @@ export default function Dashboard({ setAuthed }) {
     </>
   );
 }
+
 
