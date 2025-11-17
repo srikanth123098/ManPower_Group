@@ -321,7 +321,7 @@ export default function Dashboard({ setAuthed }) {
                   <a
                     className="download-btn"
                     href={`${
-                      import.meta.env.VITE_API || 'http://localhost:5000'
+                      import.meta.env.VITE_API_URL || 'http://localhost:5000'
                     }/api/docs/file/${encodeURIComponent(d.filename || '')}`}
                     target="_blank"
                     rel="noreferrer"
@@ -681,3 +681,4 @@ export default function Dashboard({ setAuthed }) {
     </>
   );
 }
+
