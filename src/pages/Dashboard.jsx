@@ -5,8 +5,7 @@ import Branding from '../components/Branding';
 function safeGetUser() {
   try {
     const raw = localStorage.getItem('user');
-    if (!raw) return { name: 'Akula Chandra Sekhar', 
-      email: 'MPGCAT@0078' };
+    if (!raw) return { name: 'Akula Chandra Sekhar', email: 'MPGCAT@0078' };
     if (raw.trim() === '') return { name: 'Akula Chandra Sekhar', email: 'MPGCAT@0078' };
     const parsed = JSON.parse(raw);
     if (!parsed || typeof parsed !== 'object') {
@@ -79,6 +78,9 @@ function Tracker({ status }) {
 export default function Dashboard({ setAuthed }) {
   const user = safeGetUser();
 
+  // TAB STATE - NEW
+  const [activeTab, setActiveTab] = useState('dashboard');
+
   const [docs, setDocs] = useState([]);
   const [voucherInput, setVoucherInput] = useState('');
   const [voucherRecord, setVoucherRecord] = useState(null);
@@ -142,7 +144,6 @@ export default function Dashboard({ setAuthed }) {
       const verified = res.data?.verified === true;
 
       if (!verified) {
-       
         setVoucherRecord(null);
         setLoadingSubmit(false);
         return;
@@ -166,6 +167,124 @@ export default function Dashboard({ setAuthed }) {
     ? computeStatusFromRecord({ submittedAt: voucherRecord.submittedAt })
     : null;
 
+  // RENDER COURSES TAB
+  if (activeTab === 'courses') {
+    return (
+      <>
+        <header className="header" role="banner">
+          <div className="header-container">
+            <Branding />
+            <div className="welcome">
+              <div className="kicker">Welcome Back</div>
+              <div className="username">{user.name}</div>
+            </div>
+            <button className="logout" onClick={handleLogout} aria-label="Logout from dashboard">
+              <span>Logout</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                <polyline points="16 17 21 12 16 7"></polyline>
+                <line x1="21" y1="12" x2="9" y2="12"></line>
+              </svg>
+            </button>
+          </div>
+        </header>
+
+        <div className="tab-navigation">
+          <button 
+            className={`tab-btn ${activeTab === 'dashboard' ? 'active' : ''}`}
+            onClick={() => setActiveTab('dashboard')}
+          >
+            📊 Dashboard
+          </button>
+          <button 
+            className={`tab-btn ${activeTab === 'courses' ? 'active' : ''}`}
+            onClick={() => setActiveTab('courses')}
+          >
+            📚 Courses
+          </button>
+          <button 
+            className={`tab-btn ${activeTab === 'exams' ? 'active' : ''}`}
+            onClick={() => setActiveTab('exams')}
+          >
+            📝 Exams
+          </button>
+        </div>
+
+        <div className="courses-roadmap-page">
+          <iframe 
+            src="/course-roadmap.html" 
+            style={{ 
+              width: '100%', 
+              height: 'calc(100vh - 160px)', 
+              border: 'none',
+              display: 'block'
+            }}
+            title="Course Roadmap"
+          />
+        </div>
+      </>
+    );
+  }
+
+  // RENDER EXAMS TAB
+  if (activeTab === 'exams') {
+    return (
+      <>
+        <header className="header" role="banner">
+          <div className="header-container">
+            <Branding />
+            <div className="welcome">
+              <div className="kicker">Welcome Back</div>
+              <div className="username">{user.name}</div>
+            </div>
+            <button className="logout" onClick={handleLogout} aria-label="Logout from dashboard">
+              <span>Logout</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                <polyline points="16 17 21 12 16 7"></polyline>
+                <line x1="21" y1="12" x2="9" y2="12"></line>
+              </svg>
+            </button>
+          </div>
+        </header>
+
+        <div className="tab-navigation">
+          <button 
+            className={`tab-btn ${activeTab === 'dashboard' ? 'active' : ''}`}
+            onClick={() => setActiveTab('dashboard')}
+          >
+            📊 Dashboard
+          </button>
+          <button 
+            className={`tab-btn ${activeTab === 'courses' ? 'active' : ''}`}
+            onClick={() => setActiveTab('courses')}
+          >
+            📚 Courses
+          </button>
+          <button 
+            className={`tab-btn ${activeTab === 'exams' ? 'active' : ''}`}
+            onClick={() => setActiveTab('exams')}
+          >
+            📝 Exams
+          </button>
+        </div>
+
+        <div className="coming-soon-page">
+          <div className="coming-soon-content">
+            <div className="coming-soon-icon">🚀</div>
+            <h1>Exams Coming Soon!</h1>
+            <p>We're preparing comprehensive assessments to test your knowledge.</p>
+            <p className="coming-soon-subtext">Stay tuned for updates!</p>
+            <button className="btn-primary" onClick={() => setActiveTab('dashboard')}>
+              ← Back to Dashboard
+            </button>
+          </div>
+        </div>
+      </>
+    );
+  }
+
+  // DEFAULT: RENDER DASHBOARD TAB
   return (
     <>
       {/* Floating Decorative Orbs */}
@@ -206,6 +325,28 @@ export default function Dashboard({ setAuthed }) {
           </button>
         </div>
       </header>
+
+      {/* TAB NAVIGATION */}
+      <div className="tab-navigation">
+        <button 
+          className={`tab-btn ${activeTab === 'dashboard' ? 'active' : ''}`}
+          onClick={() => setActiveTab('dashboard')}
+        >
+          📊 Dashboard
+        </button>
+        <button 
+          className={`tab-btn ${activeTab === 'courses' ? 'active' : ''}`}
+          onClick={() => setActiveTab('courses')}
+        >
+          📚 Courses
+        </button>
+        <button 
+          className={`tab-btn ${activeTab === 'exams' ? 'active' : ''}`}
+          onClick={() => setActiveTab('exams')}
+        >
+          📝 Exams
+        </button>
+      </div>
 
       {/* Main Container */}
       <div className="container" aria-live="polite">
@@ -587,9 +728,6 @@ export default function Dashboard({ setAuthed }) {
                         </div>
                       </div>
                     </div>
-
-                    
-                    
                   </div>
 
                   <div className="course-right">
@@ -681,5 +819,3 @@ export default function Dashboard({ setAuthed }) {
     </>
   );
 }
-
-
