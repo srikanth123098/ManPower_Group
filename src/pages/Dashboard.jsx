@@ -96,6 +96,7 @@ export default function Dashboard({ setAuthed }) {
     setLoadingDocs(true);
     try {
       const res = await API.get('/api/docs');
+      console.log('Fetched docs:', res.data); // Debug log
       setDocs(res.data?.docs || []);
     } catch (err) {
       console.error('fetchDocs error', err);
@@ -159,6 +160,30 @@ export default function Dashboard({ setAuthed }) {
     localStorage.removeItem('user');
     if (typeof setAuthed === 'function') setAuthed(false);
     window.location.hash = '#/';
+  }
+
+  // FIXED: Handle document download
+  function handleDownload(doc) {
+    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+    
+    // Try multiple possible URLs
+    const possibleUrls = [
+      `${apiUrl}/api/docs/file/${doc.filename}`,
+      `${apiUrl}/uploads/${doc.filename}`,
+      doc.url // If document has a direct URL field
+    ].filter(Boolean);
+
+    console.log('Attempting download with URLs:', possibleUrls);
+    console.log('Document data:', doc);
+
+    // Use the first available URL
+    const downloadUrl = possibleUrls[0];
+    
+    if (downloadUrl) {
+      window.open(downloadUrl, '_blank');
+    } else {
+      alert('Document file is not available. Please contact support.');
+    }
   }
 
   const displayStatus = voucherRecord
@@ -396,11 +421,10 @@ export default function Dashboard({ setAuthed }) {
                     </div>
                   </div>
 
-                  <a
+                  {/* FIXED DOWNLOAD BUTTON */}
+                  <button
                     className="download-btn"
-                    href={`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/docs/file/${encodeURIComponent(d.filename || '')}`}
-                    target="_blank"
-                    rel="noreferrer"
+                    onClick={() => handleDownload(d)}
                     aria-label={`Download ${d.title || 'document'}`}
                   >
                     <span>Download</span>
@@ -409,7 +433,7 @@ export default function Dashboard({ setAuthed }) {
                       <polyline points="7 10 12 15 17 10"></polyline>
                       <line x1="12" y1="15" x2="12" y2="3"></line>
                     </svg>
-                  </a>
+                  </button>
                 </article>
               ))
             )}
