@@ -1,5 +1,3 @@
-
-
 import React, { useEffect, useState } from 'react';
 import API from '../api';
 import Branding from '../components/Branding';
@@ -621,4 +619,3 @@ export default function Dashboard({ setAuthed }) {
     </>
   );
 }
-
