@@ -1,0 +1,57 @@
+/* ===== IFRAME WRAPPER ===== */
+.course-iframe-wrapper {
+  width: 100%;
+  height: calc(100vh - 160px);
+  position: relative;
+  background: #ffffff;
+  overflow: hidden;
+}
+
+.course-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+  background: #fff;
+}
+
+/* Loading indicator */
+.course-iframe-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  height: 50px;
+  border: 4px solid rgba(99, 102, 241, 0.2);
+  border-top-color: #6366f1;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  z-index: 1;
+}
+
+@keyframes spin {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+/* Hide loading indicator when iframe loads */
+.course-iframe:not([src=""]) + .course-iframe-wrapper::before,
+.course-iframe[src]:not([src=""]) ~ .course-iframe-wrapper::before {
+  display: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .course-iframe-wrapper {
+    height: calc(100vh - 140px);
+  }
+}
+
+@media (max-width: 640px) {
+  .course-iframe-wrapper {
+    height: calc(100vh - 120px);
+  }
+}
