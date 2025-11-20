@@ -15,35 +15,39 @@
   background: #fff;
 }
 
-/* Loading indicator */
-.course-iframe-wrapper::before {
-  content: '';
+/* ===== LOADING STATE ===== */
+.iframe-loading {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 10;
+}
+
+.loading-spinner {
   width: 50px;
   height: 50px;
   border: 4px solid rgba(99, 102, 241, 0.2);
   border-top-color: #6366f1;
   border-radius: 50%;
   animation: spin 1s linear infinite;
-  z-index: 1;
+  margin: 0 auto 1rem;
 }
 
 @keyframes spin {
   to {
-    transform: translate(-50%, -50%) rotate(360deg);
+    transform: rotate(360deg);
   }
 }
 
-/* Hide loading indicator when iframe loads */
-.course-iframe:not([src=""]) + .course-iframe-wrapper::before,
-.course-iframe[src]:not([src=""]) ~ .course-iframe-wrapper::before {
-  display: none;
+.iframe-loading p {
+  color: #6366f1;
+  font-weight: 600;
+  font-size: 1rem;
 }
 
-/* Responsive adjustments */
+/* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
   .course-iframe-wrapper {
     height: calc(100vh - 140px);
