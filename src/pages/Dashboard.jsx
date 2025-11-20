@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import API from '../api';
 import Branding from '../components/Branding';
+import CourseRoadmap from './CourseRoadmap';
 
 function safeGetUser() {
   try {
@@ -31,7 +32,6 @@ function computeStatusFromRecord(record) {
   return 'Submitted';
 }
 
-/* Enhanced Tracker Component */
 function Tracker({ status }) {
   const steps = ['Submitted', 'Pending', 'Verified'];
   const currentIndex = Math.max(0, steps.indexOf(status));
@@ -78,9 +78,7 @@ function Tracker({ status }) {
 export default function Dashboard({ setAuthed }) {
   const user = safeGetUser();
 
-  // TAB STATE - NEW
   const [activeTab, setActiveTab] = useState('dashboard');
-
   const [docs, setDocs] = useState([]);
   const [voucherInput, setVoucherInput] = useState('');
   const [voucherRecord, setVoucherRecord] = useState(null);
@@ -178,9 +176,9 @@ export default function Dashboard({ setAuthed }) {
               <div className="kicker">Welcome Back</div>
               <div className="username">{user.name}</div>
             </div>
-            <button className="logout" onClick={handleLogout} aria-label="Logout from dashboard">
+            <button className="logout" onClick={handleLogout} aria-label="Logout">
               <span>Logout</span>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
                 <polyline points="16 17 21 12 16 7"></polyline>
                 <line x1="21" y1="12" x2="9" y2="12"></line>
@@ -210,18 +208,7 @@ export default function Dashboard({ setAuthed }) {
           </button>
         </div>
 
-        <div className="courses-roadmap-page">
-          <iframe 
-            src="/course-roadmap.html" 
-            style={{ 
-              width: '100%', 
-              height: 'calc(100vh - 160px)', 
-              border: 'none',
-              display: 'block'
-            }}
-            title="Course Roadmap"
-          />
-        </div>
+        <CourseRoadmap />
       </>
     );
   }
@@ -237,9 +224,9 @@ export default function Dashboard({ setAuthed }) {
               <div className="kicker">Welcome Back</div>
               <div className="username">{user.name}</div>
             </div>
-            <button className="logout" onClick={handleLogout} aria-label="Logout from dashboard">
+            <button className="logout" onClick={handleLogout} aria-label="Logout">
               <span>Logout</span>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
                 <polyline points="16 17 21 12 16 7"></polyline>
                 <line x1="21" y1="12" x2="9" y2="12"></line>
@@ -287,37 +274,20 @@ export default function Dashboard({ setAuthed }) {
   // DEFAULT: RENDER DASHBOARD TAB
   return (
     <>
-      {/* Floating Decorative Orbs */}
       <div className="orb orb-1" aria-hidden="true"></div>
       <div className="orb orb-2" aria-hidden="true"></div>
       <div className="orb orb-3" aria-hidden="true"></div>
 
-      {/* Ultra-Modern Header */}
       <header className="header" role="banner">
         <div className="header-container">
           <Branding />
-
           <div className="welcome">
             <div className="kicker">Welcome Back</div>
             <div className="username">{user.name}</div>
           </div>
-
-          <button
-            className="logout"
-            onClick={handleLogout}
-            aria-label="Logout from dashboard"
-          >
+          <button className="logout" onClick={handleLogout} aria-label="Logout">
             <span>Logout</span>
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
               <polyline points="16 17 21 12 16 7"></polyline>
               <line x1="21" y1="12" x2="9" y2="12"></line>
@@ -326,7 +296,6 @@ export default function Dashboard({ setAuthed }) {
         </div>
       </header>
 
-      {/* TAB NAVIGATION */}
       <div className="tab-navigation">
         <button 
           className={`tab-btn ${activeTab === 'dashboard' ? 'active' : ''}`}
@@ -348,9 +317,7 @@ export default function Dashboard({ setAuthed }) {
         </button>
       </div>
 
-      {/* Main Container */}
       <div className="container" aria-live="polite">
-        {/* Dashboard Hero Section */}
         <section className="dashboard-hero" aria-labelledby="hero-title">
           <div className="hero-content">
             <div className="hero-badge">🎓 Learning Dashboard</div>
@@ -369,9 +336,7 @@ export default function Dashboard({ setAuthed }) {
               <div className="hero-stat-label">Documents</div>
             </div>
             <div className="hero-stat">
-              <div className="hero-stat-value">
-                {voucherRecord ? '1' : '0'}
-              </div>
+              <div className="hero-stat-value">{voucherRecord ? '1' : '0'}</div>
               <div className="hero-stat-label">Active Course</div>
             </div>
             <div className="hero-stat">
@@ -383,7 +348,6 @@ export default function Dashboard({ setAuthed }) {
           </div>
         </section>
 
-        {/* Course Documents Section */}
         <section aria-labelledby="docs-title">
           <h3 className="section-title" id="docs-title">
             <span className="section-title-icon">📚</span>
@@ -404,52 +368,25 @@ export default function Dashboard({ setAuthed }) {
               </div>
             ) : (
               docs.map((d, index) => (
-                <article
-                  key={d._id || d.filename}
-                  className="doc-card"
-                  style={{ '--index': index }}
-                >
+                <article key={d._id || d.filename} className="doc-card" style={{ '--index': index }}>
                   <div className="doc-header">
                     <div className="doc-icon" aria-hidden="true">
-                      <svg
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                      >
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" />
                       </svg>
                     </div>
                     <div className="doc-info">
-                      <h4 className="doc-title">
-                        {d.title || d.originalname || 'Untitled Document'}
-                      </h4>
+                      <h4 className="doc-title">{d.title || d.originalname || 'Untitled Document'}</h4>
                       <div className="doc-meta">
                         <span className="doc-meta-item">
-                          <svg
-                            width="14"
-                            height="14"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                          >
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                             <circle cx="12" cy="12" r="10"></circle>
                             <polyline points="12 6 12 12 16 14"></polyline>
                           </svg>
-                          {d.uploadDate
-                            ? new Date(d.uploadDate).toLocaleDateString()
-                            : 'No date'}
+                          {d.uploadDate ? new Date(d.uploadDate).toLocaleDateString() : 'No date'}
                         </span>
                         <span className="doc-meta-item">
-                          <svg
-                            width="14"
-                            height="14"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                          >
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                             <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
                             <polyline points="13 2 13 9 20 9"></polyline>
                           </svg>
@@ -461,24 +398,13 @@ export default function Dashboard({ setAuthed }) {
 
                   <a
                     className="download-btn"
-                    href={`${
-                      import.meta.env.VITE_API_URL || 'http://localhost:5000'
-                    }/api/docs/file/${encodeURIComponent(d.filename || '')}`}
+                    href={`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/docs/file/${encodeURIComponent(d.filename || '')}`}
                     target="_blank"
                     rel="noreferrer"
                     aria-label={`Download ${d.title || 'document'}`}
                   >
                     <span>Download</span>
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                       <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                       <polyline points="7 10 12 15 17 10"></polyline>
                       <line x1="12" y1="15" x2="12" y2="3"></line>
@@ -490,48 +416,28 @@ export default function Dashboard({ setAuthed }) {
           </div>
         </section>
 
-        {/* Udemy Course Card */}
         <article className="udemy-card" aria-labelledby="udemy-title">
           <div className="udemy-badge">🎓 FREE COURSE</div>
-
           <div className="udemy-content">
             <div className="udemy-left">
               <h3 id="udemy-title">Free Udemy Course</h3>
-              <p>
-                Complete this foundational course before your main program
-                begins. It covers essential prerequisites.
-              </p>
+              <p>Complete this foundational course before your main program begins. It covers essential prerequisites.</p>
               <div className="udemy-desc">
                 <ul className="udemy-features">
                   <li>
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                    >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" />
                     </svg>
                     <span>Self-paced learning</span>
                   </li>
                   <li>
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                    >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" />
                     </svg>
                     <span>Certificate of completion</span>
                   </li>
                   <li>
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="currentColor"
-                    >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" />
                     </svg>
                     <span>Lifetime access</span>
@@ -541,56 +447,32 @@ export default function Dashboard({ setAuthed }) {
             </div>
 
             <div className="udemy-cta">
-              <a
-                href="https://www.udemy.com/share/101VDQ3@BjYjqoLwuaIInBLcES-IgmOfSliob5LXXuE3oZ1SaL6BrbToDQYpI9ibVJlF9_tN7g==/"
-                target="_blank"
-                rel="noreferrer"
-              >
+              <a href="https://www.udemy.com/share/101VDQ3@BjYjqoLwuaIInBLcES-IgmOfSliob5LXXuE3oZ1SaL6BrbToDQYpI9ibVJlF9_tN7g==/" target="_blank" rel="noreferrer">
                 <button className="btn-primary">
                   <span>Open Course</span>
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
                     <polyline points="15 3 21 3 21 9"></polyline>
                     <line x1="10" y1="14" x2="21" y2="3"></line>
                   </svg>
                 </button>
               </a>
-              <a
-                href="https://www.udemy.com/"
-                target="_blank"
-                rel="noreferrer"
-              >
+              <a href="https://www.udemy.com/" target="_blank" rel="noreferrer">
                 <button className="btn-secondary">Enroll Free</button>
               </a>
             </div>
           </div>
         </article>
 
-        {/* Voucher Submission Section */}
         <section className="voucher-section" aria-labelledby="voucher-title">
           <h3 className="section-title" id="voucher-title">
             <span className="section-title-icon">🎫</span>
             Redeem Voucher Code
           </h3>
 
-          <form
-            className="voucher-form"
-            onSubmit={submitVoucher}
-            aria-label="Voucher submission form"
-          >
+          <form className="voucher-form" onSubmit={submitVoucher}>
             <div className="form-group">
-              <label htmlFor="voucher-input" className="form-label">
-                Voucher Code
-              </label>
+              <label htmlFor="voucher-input" className="form-label">Voucher Code</label>
               <div className="input-group">
                 <input
                   id="voucher-input"
@@ -598,15 +480,9 @@ export default function Dashboard({ setAuthed }) {
                   placeholder="Enter your voucher code"
                   value={voucherInput}
                   onChange={(e) => setVoucherInput(e.target.value)}
-                  aria-label="Voucher code input"
                   disabled={loadingSubmit}
                 />
-                <button
-                  type="submit"
-                  className="btn-primary"
-                  aria-label="Submit voucher"
-                  disabled={loadingSubmit}
-                >
+                <button type="submit" className="btn-primary" disabled={loadingSubmit}>
                   {loadingSubmit ? (
                     <>
                       <span className="loader-sm"></span>
@@ -615,16 +491,7 @@ export default function Dashboard({ setAuthed }) {
                   ) : (
                     <>
                       <span>Submit</span>
-                      <svg
-                        width="16"
-                        height="16"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                         <polyline points="9 18 15 12 9 6"></polyline>
                       </svg>
                     </>
@@ -635,12 +502,7 @@ export default function Dashboard({ setAuthed }) {
 
             {voucherError && (
               <div className="alert alert-error" role="alert">
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M13,13H11V7H13M13,17H11V15H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" />
                 </svg>
                 <div>
@@ -651,15 +513,9 @@ export default function Dashboard({ setAuthed }) {
             )}
           </form>
 
-          {/* Course Card & Tracker */}
           {voucherRecord ? (
             <div className="voucher-success">
-              {/* Premium Course Card */}
-              <article
-                className="course-card"
-                role="region"
-                aria-label="Course details"
-              >
+              <article className="course-card">
                 <div className="course-hero">
                   <span className="course-badge">✨ PRO TRACK</span>
                   <h3 className="course-title">Content Analyst Program</h3>
@@ -688,25 +544,11 @@ export default function Dashboard({ setAuthed }) {
                       </div>
                       <div className="stat">
                         <div className="stat-icon">
-                          {displayStatus === 'Verified'
-                            ? '✓'
-                            : displayStatus === 'Pending'
-                            ? '⏳'
-                            : '📝'}
+                          {displayStatus === 'Verified' ? '✓' : displayStatus === 'Pending' ? '⏳' : '📝'}
                         </div>
                         <div>
                           <div className="stat-label">Status</div>
-                          <div
-                            className="stat-value"
-                            style={{
-                              color:
-                                displayStatus === 'Verified'
-                                  ? '#10b981'
-                                  : displayStatus === 'Pending'
-                                  ? '#f59e0b'
-                                  : '#6366f1'
-                            }}
-                          >
+                          <div className="stat-value" style={{ color: displayStatus === 'Verified' ? '#10b981' : displayStatus === 'Pending' ? '#f59e0b' : '#6366f1' }}>
                             {displayStatus}
                           </div>
                         </div>
@@ -715,15 +557,8 @@ export default function Dashboard({ setAuthed }) {
                         <div className="stat-icon">📅</div>
                         <div>
                           <div className="stat-label">Submitted</div>
-                          <div
-                            className="stat-value"
-                            style={{ fontSize: '0.75rem' }}
-                          >
-                            {voucherRecord.submittedAt
-                              ? new Date(
-                                  voucherRecord.submittedAt
-                                ).toLocaleDateString()
-                              : '—'}
+                          <div className="stat-value" style={{ fontSize: '0.75rem' }}>
+                            {voucherRecord.submittedAt ? new Date(voucherRecord.submittedAt).toLocaleDateString() : '—'}
                           </div>
                         </div>
                       </div>
@@ -734,35 +569,16 @@ export default function Dashboard({ setAuthed }) {
                     <div className="verification-panel">
                       <div className="verification-header">
                         <h4>Verification Status</h4>
-                        <span
-                          className={`status-badge status-${displayStatus?.toLowerCase()}`}
-                        >
-                          {displayStatus}
-                        </span>
+                        <span className={`status-badge status-${displayStatus?.toLowerCase()}`}>{displayStatus}</span>
                       </div>
-
                       <Tracker status={displayStatus || 'Submitted'} />
-
                       <div className="verification-info">
                         <div className="info-item">
-                          <svg
-                            width="16"
-                            height="16"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                          >
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                             <circle cx="12" cy="12" r="10"></circle>
                             <polyline points="12 6 12 12 16 14"></polyline>
                           </svg>
-                          <span>
-                            {voucherRecord.submittedAt
-                              ? new Date(
-                                  voucherRecord.submittedAt
-                                ).toLocaleString()
-                              : '—'}
-                          </span>
+                          <span>{voucherRecord.submittedAt ? new Date(voucherRecord.submittedAt).toLocaleString() : '—'}</span>
                         </div>
                       </div>
                     </div>
@@ -771,21 +587,12 @@ export default function Dashboard({ setAuthed }) {
               </article>
 
               <div className="alert alert-success">
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" />
                 </svg>
                 <div>
                   <strong>Voucher Submitted Successfully!</strong>
-                  <p>
-                    Your submission has been received and is under verification.
-                    You'll receive final confirmation once the process is
-                    complete.
-                  </p>
+                  <p>Your submission has been received and is under verification.</p>
                 </div>
               </div>
             </div>
@@ -793,26 +600,18 @@ export default function Dashboard({ setAuthed }) {
             <div className="empty-state">
               <div className="empty-state-icon">🎫</div>
               <h4>No Voucher Submitted</h4>
-              <p>
-                Enter a valid voucher code above to unlock your premium course
-                content and start your learning journey.
-              </p>
+              <p>Enter a valid voucher code above to unlock your premium course content.</p>
             </div>
           )}
         </section>
 
-        {/* Important Notice */}
         <div className="alert alert-warning">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
             <path d="M13,13H11V7H13M13,17H11V15H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" />
           </svg>
           <div>
             <strong>Important Deadline</strong>
-            <p>
-              Please complete all documents and the free Udemy course by{' '}
-              <strong>20th November 2025</strong>. Your main program begins from
-              this date.
-            </p>
+            <p>Please complete all documents and the free Udemy course by <strong>20th November 2025</strong>.</p>
           </div>
         </div>
       </div>
