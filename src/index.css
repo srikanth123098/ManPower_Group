@@ -1435,21 +1435,7 @@ body::before {
   display: flex;
   align-items: center;
   gap: var(--sp-2);
-  position: relative;
   font-family: var(--font);
-}
-
-.tab-btn::before {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%) scaleX(0);
-  width: 80%;
-  height: 3px;
-  background: var(--grad-vibrant);
-  transition: transform var(--trans);
-  border-radius: 3px 3px 0 0;
 }
 
 .tab-btn:hover {
@@ -1457,18 +1443,11 @@ body::before {
   background: rgba(99, 102, 241, 0.05);
 }
 
-.tab-btn:hover::before {
-  transform: translateX(-50%) scaleX(0.5);
-}
-
 .tab-btn.active {
   color: var(--primary);
+  border-bottom-color: var(--primary);
   background: rgba(99, 102, 241, 0.08);
   font-weight: 800;
-}
-
-.tab-btn.active::before {
-  transform: translateX(-50%) scaleX(1);
 }
 
 /* ===== COMING SOON PAGE ===== */
@@ -1478,26 +1457,12 @@ body::before {
   align-items: center;
   justify-content: center;
   background: linear-gradient(135deg, #f0f9ff 0%, #faf5ff 50%, #fef3c7 100%);
-  position: relative;
-  overflow: hidden;
-}
-
-.coming-soon-page::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: 
-    radial-gradient(circle at 20% 30%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
-    radial-gradient(circle at 80% 70%, rgba(236, 72, 153, 0.08) 0%, transparent 50%);
-  animation: bgShift 15s ease-in-out infinite;
 }
 
 .coming-soon-content {
   text-align: center;
   max-width: 600px;
   padding: var(--sp-8);
-  position: relative;
-  z-index: 1;
   animation: fadeUp 0.8s ease-out;
 }
 
@@ -1505,22 +1470,11 @@ body::before {
   font-size: 6rem;
   margin-bottom: var(--sp-4);
   animation: float 3s ease-in-out infinite;
-  filter: drop-shadow(0 8px 20px rgba(99, 102, 241, 0.3));
 }
 
 @keyframes float {
-  0%, 100% {
-    transform: translateY(0) rotate(0deg);
-  }
-  25% {
-    transform: translateY(-15px) rotate(-5deg);
-  }
-  50% {
-    transform: translateY(-20px) rotate(0deg);
-  }
-  75% {
-    transform: translateY(-15px) rotate(5deg);
-  }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
 }
 
 .coming-soon-content h1 {
@@ -1531,92 +1485,36 @@ body::before {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   margin-bottom: var(--sp-3);
-  line-height: 1.2;
-  background-size: 200%;
-  animation: gradientText 4s ease infinite;
 }
 
 .coming-soon-content > p {
   font-size: 1.2rem;
   color: var(--text-medium);
   margin-bottom: var(--sp-2);
-  font-weight: 500;
 }
 
 .coming-soon-subtext {
   font-size: 1rem !important;
   color: var(--text-light) !important;
   margin-bottom: var(--sp-6) !important;
-  font-weight: 400 !important;
 }
 
-.coming-soon-content .btn-primary {
-  margin-top: var(--sp-4);
-  padding: 15px 35px;
-  font-size: 1.05rem;
-}
-
-/* ===== COURSES ROADMAP PAGE ===== */
-.courses-roadmap-page {
-  background: linear-gradient(135deg, #f0f9ff 0%, #faf5ff 50%, #fef3c7 100%);
-  min-height: calc(100vh - 160px);
-}
-
-/* ===== ALERT COLORS ===== */
 .alert-warning {
   background: linear-gradient(135deg, rgba(251, 146, 60, 0.12), rgba(251, 146, 60, 0.08));
   border-color: rgba(251, 146, 60, 0.4);
   color: #92400e;
 }
 
-.alert-warning svg {
-  color: #f59e0b;
-}
-
-/* ===== RESPONSIVE TABS ===== */
 @media (max-width: 768px) {
   .tab-navigation {
     padding: 0 var(--sp-2);
     gap: 0;
     overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-  }
-
-  .tab-navigation::-webkit-scrollbar {
-    display: none;
   }
 
   .tab-btn {
     padding: var(--sp-3) var(--sp-4);
     font-size: 0.9rem;
     white-space: nowrap;
-    flex-shrink: 0;
-  }
-
-  .coming-soon-content {
-    padding: var(--sp-4);
-  }
-
-  .coming-soon-icon {
-    font-size: 4rem;
-  }
-
-  .coming-soon-content h1 {
-    font-size: 2rem;
-  }
-
-  .coming-soon-content > p {
-    font-size: 1rem;
-  }
-}
-
-@media (max-width: 640px) {
-  .tab-navigation {
-    top: 70px;
-  }
-
-  .courses-roadmap-page iframe {
-    height: calc(100vh - 140px) !important;
   }
 }
