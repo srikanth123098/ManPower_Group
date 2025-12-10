@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import API from '../api';
 import Branding from '../components/Branding';
 import CourseRoadmap from './CourseRoadmap';
+import ExamPlatform from './ExamPlatform';
 
 function safeGetUser() {
   try {
@@ -96,7 +97,7 @@ export default function Dashboard({ setAuthed }) {
     setLoadingDocs(true);
     try {
       const res = await API.get('/api/docs');
-      console.log('Fetched docs:', res.data); // Debug log
+      console.log('Fetched docs:', res.data);
       setDocs(res.data?.docs || []);
     } catch (err) {
       console.error('fetchDocs error', err);
@@ -162,21 +163,18 @@ export default function Dashboard({ setAuthed }) {
     window.location.hash = '#/';
   }
 
-  // FIXED: Handle document download
   function handleDownload(doc) {
     const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
     
-    // Try multiple possible URLs
     const possibleUrls = [
       `${apiUrl}/api/docs/file/${doc.filename}`,
       `${apiUrl}/uploads/${doc.filename}`,
-      doc.url // If document has a direct URL field
+      doc.url
     ].filter(Boolean);
 
     console.log('Attempting download with URLs:', possibleUrls);
     console.log('Document data:', doc);
 
-    // Use the first available URL
     const downloadUrl = possibleUrls[0];
     
     if (downloadUrl) {
@@ -238,7 +236,7 @@ export default function Dashboard({ setAuthed }) {
     );
   }
 
-  // RENDER EXAMS TAB
+  // RENDER EXAMS TAB - UPDATED WITH IFRAME
   if (activeTab === 'exams') {
     return (
       <>
@@ -281,17 +279,7 @@ export default function Dashboard({ setAuthed }) {
           </button>
         </div>
 
-        <div className="coming-soon-page">
-          <div className="coming-soon-content">
-            <div className="coming-soon-icon">🚀</div>
-            <h1>Exams Coming Soon!</h1>
-            <p>We're preparing comprehensive assessments to test your knowledge.</p>
-            <p className="coming-soon-subtext">Stay tuned for updates!</p>
-            <button className="btn-primary" onClick={() => setActiveTab('dashboard')}>
-              ← Back to Dashboard
-            </button>
-          </div>
-        </div>
+        <ExamPlatform />
       </>
     );
   }
@@ -405,7 +393,7 @@ export default function Dashboard({ setAuthed }) {
                       <div className="doc-meta">
                         <span className="doc-meta-item">
                           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <circle cx="12" cy="12" r="10"></circle>
+                            ircle cx="12" cy="12" r="10"></circle>
                             <polyline points="12 6 12 12 16 14"></polyline>
                           </svg>
                           {d.uploadDate ? new Date(d.uploadDate).toLocaleDateString() : 'No date'}
@@ -421,7 +409,6 @@ export default function Dashboard({ setAuthed }) {
                     </div>
                   </div>
 
-                  {/* FIXED DOWNLOAD BUTTON */}
                   <button
                     className="download-btn"
                     onClick={() => handleDownload(d)}
@@ -600,7 +587,7 @@ export default function Dashboard({ setAuthed }) {
                       <div className="verification-info">
                         <div className="info-item">
                           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <circle cx="12" cy="12" r="10"></circle>
+                            ircle cx="12" cy="12" r="10"></circle>
                             <polyline points="12 6 12 12 16 14"></polyline>
                           </svg>
                           <span>{voucherRecord.submittedAt ? new Date(voucherRecord.submittedAt).toLocaleString() : '—'}</span>
