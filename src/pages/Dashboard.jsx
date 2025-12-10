@@ -236,7 +236,7 @@ export default function Dashboard({ setAuthed }) {
     );
   }
 
-  // RENDER EXAMS TAB - UPDATED WITH IFRAME
+  // RENDER EXAMS TAB
   if (activeTab === 'exams') {
     return (
       <>
