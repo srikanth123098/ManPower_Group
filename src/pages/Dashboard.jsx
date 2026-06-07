@@ -1,3 +1,4 @@
+// src/pages/Dashboard.jsx
 import React, { useEffect, useState } from 'react';
 import API from '../api';
 import Branding from '../components/Branding';
@@ -97,7 +98,7 @@ export default function Dashboard({ setAuthed }) {
     setLoadingDocs(true);
     try {
       const res = await API.get('/api/docs');
-      console.log('Fetched docs:', res.data); // Debug log
+      console.log('Fetched docs:', res.data);
       setDocs(res.data?.docs || []);
     } catch (err) {
       console.error('fetchDocs error', err);
@@ -163,23 +164,20 @@ export default function Dashboard({ setAuthed }) {
     window.location.hash = '#/';
   }
 
-  // FIXED: Handle document download
   function handleDownload(doc) {
     const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-    
-    // Try multiple possible URLs
+
     const possibleUrls = [
       `${apiUrl}/api/docs/file/${doc.filename}`,
       `${apiUrl}/uploads/${doc.filename}`,
-      doc.url // If document has a direct URL field
+      doc.url
     ].filter(Boolean);
 
     console.log('Attempting download with URLs:', possibleUrls);
     console.log('Document data:', doc);
 
-    // Use the first available URL
     const downloadUrl = possibleUrls[0];
-    
+
     if (downloadUrl) {
       window.open(downloadUrl, '_blank');
     } else {
@@ -191,7 +189,7 @@ export default function Dashboard({ setAuthed }) {
     ? computeStatusFromRecord({ submittedAt: voucherRecord.submittedAt })
     : null;
 
-  // RENDER COURSES TAB
+  // COURSES TAB
   if (activeTab === 'courses') {
     return (
       <>
@@ -207,7 +205,7 @@ export default function Dashboard({ setAuthed }) {
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
                 <polyline points="16 17 21 12 16 7"></polyline>
-                <line x1="21" y1="12" x2="9" y2="12"></line>
+                e x1="21" y1="12" x2="9" y2="12"></line>
               </svg>
             </button>
           </div>
@@ -239,7 +237,7 @@ export default function Dashboard({ setAuthed }) {
     );
   }
 
-  // RENDER EXAMS TAB – now uses ExamPlatform instead of "Coming Soon"
+  // EXAMS TAB
   if (activeTab === 'exams') {
     return (
       <>
@@ -255,7 +253,7 @@ export default function Dashboard({ setAuthed }) {
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
                 <polyline points="16 17 21 12 16 7"></polyline>
-                <line x1="21" y1="12" x2="9" y2="12"></line>
+                e x1="21" y1="12" x2="9" y2="12"></line>
               </svg>
             </button>
           </div>
@@ -287,7 +285,7 @@ export default function Dashboard({ setAuthed }) {
     );
   }
 
-  // DEFAULT: RENDER DASHBOARD TAB
+  // DEFAULT: DASHBOARD TAB WITH NEW CONTENT
   return (
     <>
       <div className="orb orb-1" aria-hidden="true"></div>
@@ -306,7 +304,7 @@ export default function Dashboard({ setAuthed }) {
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
               <polyline points="16 17 21 12 16 7"></polyline>
-              <line x1="21" y1="12" x2="9" y2="12"></line>
+              e x1="21" y1="12" x2="9" y2="12"></line>
             </svg>
           </button>
         </div>
@@ -334,302 +332,147 @@ export default function Dashboard({ setAuthed }) {
       </div>
 
       <div className="container" aria-live="polite">
-        <section className="dashboard-hero" aria-labelledby="hero-title">
-          <div className="hero-content">
-            <div className="hero-badge">🎓 Learning Dashboard</div>
-            <h2 id="hero-title" className="hero-title">
-              Welcome to Your Learning Journey
+        {/* ENTERPRISE-STYLE ONBOARDING STATUS HERO */}
+        <section className="status-hero" aria-labelledby="onboarding-title">
+          <div className="status-hero-left">
+            <span className="status-eyebrow">Onboarding Status</span>
+            <h2 id="onboarding-title" className="status-hero-title">
+              You are one step away from activation
             </h2>
-            <p className="hero-description">
-              Access all your course materials, track your progress, and unlock
-              premium content with voucher codes. Complete prerequisites before
-              the program starts.
+            <p className="status-hero-text">
+              Core checks for your ManPower E-Learning Academy profile are almost complete.
+              Review the items below and submit your bond agreement before the deadline to
+              activate your E-Learning platform.
             </p>
+
+            <div className="status-hero-meta">
+              <div className="status-chip status-chip-success">
+                <span className="status-chip-dot"></span>
+                Documents verification completed
+              </div>
+              <div className="status-chip status-chip-success">
+                <span className="status-chip-dot"></span>
+                Background verification completed
+              </div>
+              <div className="status-chip status-chip-pending">
+                <span className="status-chip-dot"></span>
+                Bond agreement submission pending · Deadline 8 June, 11:59 PM
+              </div>
+            </div>
           </div>
-          <div className="hero-stats">
-            <div className="hero-stat">
-              <div className="hero-stat-value">{docs.length}</div>
-              <div className="hero-stat-label">Documents</div>
-            </div>
-            <div className="hero-stat">
-              <div className="hero-stat-value">{voucherRecord ? '1' : '0'}</div>
-              <div className="hero-stat-label">Active Course</div>
-            </div>
-            <div className="hero-stat">
-              <div className="hero-stat-value">
-                {displayStatus === 'Verified' ? '100%' : '50%'}
-              </div>
-              <div className="hero-stat-label">Progress</div>
-            </div>
-          </div>
-        </section>
 
-        <section aria-labelledby="docs-title">
-          <h3 className="section-title" id="docs-title">
-            <span className="section-title-icon">📚</span>
-            Course Documents
-          </h3>
-
-          <div className="docs-grid" aria-live="polite">
-            {loadingDocs ? (
-              <div className="loading-state">
-                <div className="loader"></div>
-                <p>Loading your documents...</p>
+          <div className="status-hero-right" aria-label="Activation progress overview">
+            <div className="status-summary-card">
+              <div className="status-summary-header">
+                <span className="status-summary-label">Activation progress</span>
+                <span className="status-summary-count">2 / 3 checks completed</span>
               </div>
-            ) : docs.length === 0 ? (
-              <div className="empty-state">
-                <div className="empty-state-icon">📄</div>
-                <h4>No Documents Yet</h4>
-                <p>Course documents will appear here once uploaded by your instructor.</p>
+              <div className="status-progress-bar">
+                <div className="status-progress-fill" style={{ width: '66%' }} />
               </div>
-            ) : (
-              docs.map((d, index) => (
-                <article key={d._id || d.filename} className="doc-card" style={{ '--index': index }}>
-                  <div className="doc-header">
-                    <div className="doc-icon" aria-hidden="true">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" />
-                      </svg>
-                    </div>
-                    <div className="doc-info">
-                      <h4 className="doc-title">{d.title || d.originalname || 'Untitled Document'}</h4>
-                      <div className="doc-meta">
-                        <span className="doc-meta-item">
-                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <rcle cx="12" cy="12" r="10"></circle>
-                            <polyline points="12 6 12 12 16 14"></polyline>
-                          </svg>
-                          {d.uploadDate ? new Date(d.uploadDate).toLocaleDateString() : 'No date'}
-                        </span>
-                        <span className="doc-meta-item">
-                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
-                            <polyline points="13 2 13 9 20 9"></polyline>
-                          </svg>
-                          PDF
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* FIXED DOWNLOAD BUTTON */}
-                  <button
-                    className="download-btn"
-                    onClick={() => handleDownload(d)}
-                    aria-label={`Download ${d.title || 'document'}`}
-                  >
-                    <span>Download</span>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                      <polyline points="7 10 12 15 17 10"></polyline>
-                      <line x1="12" y1="15" x2="12" y2="3"></line>
-                    </svg>
-                  </button>
-                </article>
-              ))
-            )}
+              <p className="status-summary-text">
+                Complete and submit the signed bond / service agreement to move to{" "}
+                <strong>full platform access</strong> with all training modules unlocked.
+              </p>
+              <div className="status-deadline">
+                <span className="status-deadline-label">Time-sensitive</span>
+                <span className="status-deadline-value">8 June, 11:59 PM</span>
+              </div>
+            </div>
           </div>
         </section>
 
-        <article className="udemy-card" aria-labelledby="udemy-title">
-          <div className="udemy-badge">🎓 FREE COURSE</div>
-          <div className="udemy-content">
-            <div className="udemy-left">
-              <h3 id="udemy-title">Free Udemy Course</h3>
-              <p>Complete this foundational course before your main program begins. It covers essential prerequisites.</p>
-              <div className="udemy-desc">
-                <ul className="udemy-features">
-                  <li>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" />
-                    </svg>
-                    <span>Self-paced learning</span>
-                  </li>
-                  <li>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" />
-                    </svg>
-                    <span>Certificate of completion</span>
-                  </li>
-                  <li>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" />
-                    </svg>
-                    <span>Lifetime access</span>
-                  </li>
+        {/* DETAILED STATUS CARDS */}
+        <section
+          className="status-grid-section"
+          aria-label="Detailed onboarding checklist"
+        >
+          <div className="status-grid">
+            <article className="status-card status-card-complete">
+              <header className="status-card-header">
+                <div className="status-card-icon status-card-icon-success">📁</div>
+                <div>
+                  <h3 className="status-card-title">Documents Verification</h3>
+                  <span className="status-pill status-pill-complete">Completed</span>
+                </div>
+              </header>
+              <p className="status-card-body">
+                All mandatory documents submitted to ManPower E-Learning Academy have been
+                reviewed and verified by the onboarding team. No further action is required
+                for this step.
+              </p>
+            </article>
+
+            <article className="status-card status-card-complete">
+              <header className="status-card-header">
+                <div className="status-card-icon status-card-icon-success">🔍</div>
+                <div>
+                  <h3 className="status-card-title">Background Verification</h3>
+                  <span className="status-pill status-pill-complete">Completed</span>
+                </div>
+              </header>
+              <p className="status-card-body">
+                Your background verification has been successfully completed. You are
+                eligible to proceed with the bond agreement and training program.
+              </p>
+            </article>
+
+            <article className="status-card status-card-pending">
+              <header className="status-card-header">
+                <div className="status-card-icon status-card-icon-pending">📝</div>
+                <div>
+                  <h3 className="status-card-title">Bond / Service Agreement</h3>
+                  <span className="status-pill status-pill-pending">Submission pending</span>
+                </div>
+              </header>
+              <p className="status-card-body">
+                Please review, sign and submit the bond / service agreement before the
+                deadline to avoid delays in your program start date.
+              </p>
+              <ul className="status-card-listst">
+                >Download and read the bond / service agreement carefully.</l/li>
+                >Sign the agreement as per the instructions provided.</l/li>
+                >
+                  Submit the signed copy through the official communication channel or
+                  portal shared with you.
+                </li>
+              </ul>
+              <div className="status-card-deadline">
+                <span className="status-card-deadline-label">Submission deadline</span>
+                <span className="status-card-deadline-value">8 June · 11:59 PM</span>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        {/* NEXT STEPS / INFORMATION PANEL */}
+        <section className="status-next-steps" aria-labelledby="next-steps-title">
+          <div className="status-next-steps-card">
+            <h3 id="next-steps-title">What happens after you submit?</h3>
+            <p className="status-next-steps-text">
+              Once you submit the <strong>service agreement</strong>, your E-Learning
+              platform will be activated with your training modules and practice resources.
+            </p>
+            <div className="status-next-steps-grid">
+              <div className="status-next-steps-column">
+                <h4 className="status-next-steps-heading">Post-submission journey</h4>
+                <ul className="status-next-steps-listst">
+                  >Receive confirmation of agreement receipt on your registered email.</l/li>
+                  >Training modules and learning paths are allocated to your account.</l/li>
+                  >Access to course content, practice exams and live sessions is enabled.</li>
                 </ul>
               </div>
-            </div>
-
-            <div className="udemy-cta">
-              <a href="https://www.udemy.com/share/101VDQ3@BjYjqoLwuaIInBLcES-IgmOfSliob5LXXuE3oZ1SaL6BrbToDQYpI9ibVJlF9_tN7g==/" target="_blank" rel="noreferrer">
-                <button className="btn-primary">
-                  <span>Open Course</span>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                    <polyline points="15 3 21 3 21 9"></polyline>
-                    <line x1="10" y1="14" x2="21" y2="3"></line>
-                  </svg>
-                </button>
-              </a>
-              <a href="https://www.udemy.com/" target="_blank" rel="noreferrer">
-                <button className="btn-secondary">Enroll Free</button>
-              </a>
+              <div className="status-next-steps-column">
+                <h4 className="status-next-steps-heading">Need support?</h4>
+                <p className="status-support-text">
+                  If you have already submitted the bond agreement or have any queries
+                  regarding the document, please reach out to the onboarding support team
+                  with your registered name and email ID.
+                </p>
+              </div>
             </div>
           </div>
-        </article>
-
-        <section className="voucher-section" aria-labelledby="voucher-title">
-          <h3 className="section-title" id="voucher-title">
-            <span className="section-title-icon">🎫</span>
-            Redeem Voucher Code
-          </h3>
-
-          <form className="voucher-form" onSubmit={submitVoucher} aria-label="Voucher submission form">
-            <div className="form-group">
-              <label htmlFor="voucher-input" className="form-label">Voucher Code</label>
-              <div className="input-group">
-                <input
-                  id="voucher-input"
-                  className="input"
-                  placeholder="Enter your voucher code"
-                  value={voucherInput}
-                  onChange={(e) => setVoucherInput(e.target.value)}
-                  aria-label="Voucher code input"
-                  disabled={loadingSubmit}
-                />
-                <button type="submit" className="btn-primary" aria-label="Submit voucher" disabled={loadingSubmit}>
-                  {loadingSubmit ? (
-                    <>
-                      <span className="loader-sm"></span>
-                      <span>Verifying...</span>
-                    </>
-                  ) : (
-                    <>
-                      <span>Submit</span>
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <polyline points="9 18 15 12 9 6"></polyline>
-                      </svg>
-                    </>
-                  )}
-                </button>
-              </div>
-            </div>
-
-            {voucherError && (
-              <div className="alert alert-error" role="alert">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M13,13H11V7H13M13,17H11V15H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" />
-                </svg>
-                <div>
-                  <strong>Error</strong>
-                  <p>{voucherError}</p>
-                </div>
-              </div>
-            )}
-          </form>
-
-          {voucherRecord ? (
-            <div className="voucher-success">
-              <article className="course-card" role="region" aria-label="Course details">
-                <div className="course-hero">
-                  <span className="course-badge">✨ PRO TRACK</span>
-                  <h3 className="course-title">Content Analyst Program</h3>
-                  <p className="course-sub">
-                    Comprehensive 3-month technical and content analysis program
-                    with industry experts and hands-on projects
-                  </p>
-                </div>
-
-                <div className="course-body">
-                  <div className="course-left">
-                    <div className="course-stats">
-                      <div className="stat">
-                        <div className="stat-icon">⏱️</div>
-                        <div>
-                          <div className="stat-label">Duration</div>
-                          <div className="stat-value">3 Months</div>
-                        </div>
-                      </div>
-                      <div className="stat">
-                        <div className="stat-icon">💰</div>
-                        <div>
-                          <div className="stat-label">Voucher Worth</div>
-                          <div className="stat-value">₹60,000</div>
-                        </div>
-                      </div>
-                      <div className="stat">
-                        <div className="stat-icon">
-                          {displayStatus === 'Verified' ? '✓' : displayStatus === 'Pending' ? '⏳' : '📝'}
-                        </div>
-                        <div>
-                          <div className="stat-label">Status</div>
-                          <div className="stat-value" style={{ color: displayStatus === 'Verified' ? '#10b981' : displayStatus === 'Pending' ? '#f59e0b' : '#6366f1' }}>
-                            {displayStatus}
-                          </div>
-                        </div>
-                      </div>
-                      <div className="stat">
-                        <div className="stat-icon">📅</div>
-                        <div>
-                          <div className="stat-label">Submitted</div>
-                          <div className="stat-value" style={{ fontSize: '0.75rem' }}>
-                            {voucherRecord.submittedAt ? new Date(voucherRecord.submittedAt).toLocaleDateString() : '—'}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="course-right">
-                    <div className="verification-panel">
-                      <div className="verification-header">
-                        <h4>Verification Status</h4>
-                        <span className={`status-badge status-${displayStatus?.toLowerCase()}`}>{displayStatus}</span>
-                      </div>
-                      <Tracker status={displayStatus || 'Submitted'} />
-                      <div className="verification-info">
-                        <div className="info-item">
-                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                            <rcle cx="12" cy="12" r="10"></circle>
-                            <polyline points="12 6 12 12 16 14"></polyline>
-                          </svg>
-                          <span>{voucherRecord.submittedAt ? new Date(voucherRecord.submittedAt).toLocaleString() : '—'}</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </article>
-
-              <div className="alert alert-success">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" />
-                </svg>
-                <div>
-                  <strong>Voucher Submitted Successfully!</strong>
-                  <p>Your submission has been received and is under verification. You'll receive final confirmation once the process is complete.</p>
-                </div>
-              </div>
-            </div>
-          ) : (
-            <div className="empty-state">
-              <div className="empty-state-icon">🎫</div>
-              <h4>No Voucher Submitted</h4>
-              <p>Enter a valid voucher code above to unlock your premium course content and start your learning journey.</p>
-            </div>
-          )}
         </section>
-
-        <div className="alert alert-warning">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M13,13H11V7H13M13,17H11V15H13M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" />
-          </svg>
-          <div>
-            <strong>Important Deadline</strong>
-            <p>Please complete all documents and the free Udemy course by <strong>20th November 2025</strong>. Your main program begins from this date.</p>
-          </div>
-        </div>
       </div>
     </>
   );
