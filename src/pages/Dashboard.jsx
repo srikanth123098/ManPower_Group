@@ -1,3 +1,4 @@
+// src/pages/Dashboard.jsx
 import React, { useState } from 'react';
 import Branding from '../components/Branding';
 import CourseRoadmap from './CourseRoadmap';
@@ -32,7 +33,7 @@ export default function Dashboard({ setAuthed }) {
     window.location.hash = '#/';
   }
 
-  // RENDER COURSES TAB
+  // COURSES TAB
   if (activeTab === 'courses') {
     return (
       <>
@@ -48,7 +49,7 @@ export default function Dashboard({ setAuthed }) {
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
                 <polyline points="16 17 21 12 16 7"></polyline>
-                <line x1="21" y1="12" x2="9" y2="12"></line>
+                e x1="21" y1="12" x2="9" y2="12"></line>
               </svg>
             </button>
           </div>
@@ -80,7 +81,7 @@ export default function Dashboard({ setAuthed }) {
     );
   }
 
-  // RENDER EXAMS TAB
+  // EXAMS TAB – simple “coming soon”
   if (activeTab === 'exams') {
     return (
       <>
@@ -96,7 +97,7 @@ export default function Dashboard({ setAuthed }) {
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
                 <polyline points="16 17 21 12 16 7"></polyline>
-                <line x1="21" y1="12" x2="9" y2="12"></line>
+                e x1="21" y1="12" x2="9" y2="12"></line>
               </svg>
             </button>
           </div>
@@ -127,8 +128,8 @@ export default function Dashboard({ setAuthed }) {
           <div className="coming-soon-content">
             <div className="coming-soon-icon">🚀</div>
             <h1>Exams Coming Soon!</h1>
-            <p>We're preparing comprehensive assessments to test your knowledge.</p>
-            <p className="coming-soon-subtext">Stay tuned for updates!</p>
+            <p>We’re preparing comprehensive assessments to test your knowledge.</p>
+            <p className="coming-soon-subtext">Stay tuned for updates.</p>
             <button className="btn-primary" onClick={() => setActiveTab('dashboard')}>
               ← Back to Dashboard
             </button>
@@ -138,7 +139,7 @@ export default function Dashboard({ setAuthed }) {
     );
   }
 
-  // DEFAULT: RENDER DASHBOARD TAB
+  // DASHBOARD TAB – NEW ULTRA-PRO LAYOUT
   return (
     <>
       <div className="orb orb-1" aria-hidden="true"></div>
@@ -157,7 +158,7 @@ export default function Dashboard({ setAuthed }) {
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
               <polyline points="16 17 21 12 16 7"></polyline>
-              <line x1="21" y1="12" x2="9" y2="12"></line>
+              e x1="21" y1="12" x2="9" y2="12"></line>
             </svg>
           </button>
         </div>
@@ -184,82 +185,140 @@ export default function Dashboard({ setAuthed }) {
         </button>
       </div>
 
-      <div className="container" aria-live="polite">
-        <section className="activation-hero" aria-labelledby="activation-title">
-          <div className="activation-hero-content">
-            <span className="activation-badge">ONBOARDING STATUS</span>
-            <h2 id="activation-title" className="activation-title">
-              Your onboarding is almost complete
+      <div className="container onboard-layout" aria-live="polite">
+        {/* SUMMARY STRIP */}
+        <section className="onboard-header" aria-labelledby="onboard-title">
+          <div className="onboard-header-main">
+            <div className="onboard-chip">
+              <span className="onboard-chip-dot" />
+              Onboarding overview
+            </div>
+            <h2 id="onboard-title" className="onboard-title">
+              Final step before your platform goes live
             </h2>
-            <p className="activation-description">
-              Please review your current verification status below. Your E-Learning Platform
-              will be activated once the service agreement is successfully submitted.
+            <p className="onboard-subtitle">
+              Documents and background checks are complete. Submit the bond / service
+              agreement to activate your ManPower E-Learning Platform.
             </p>
           </div>
 
-          <div className="activation-progress-card">
-            <div className="activation-progress-top">
-              <span>Completion Status</span>
-              <strong>2 of 3 completed</strong>
+          <div className="onboard-header-meta" aria-label="Onboarding metrics">
+            <div className="onboard-metric">
+              <span className="onboard-metric-label">Checks completed</span>
+              <span className="onboard-metric-value">2 / 3</span>
+              <span className="onboard-metric-meta">Verification & documents</span>
             </div>
-            <div className="activation-progress-bar">
-              <div className="activation-progress-fill"></div>
+            <div className="onboard-metric bordered">
+              <span className="onboard-metric-label">Pending item</span>
+              <span className="onboard-metric-value highlight">Bond agreement</span>
+              <span className="onboard-metric-meta">Deadline · 8 June, 11:59 PM</span>
             </div>
-            <p className="activation-progress-note">
-              Submit the pending agreement before the deadline to unlock training access.
-            </p>
           </div>
         </section>
 
-        <section className="verification-grid" aria-label="Verification checklist">
-          <article className="verification-card verification-card-success">
-            <div className="verification-card-top">
-              <div className="verification-icon">✓</div>
-              <span className="verification-status verification-status-success">Completed</span>
-            </div>
-            <h3>Documents Verification</h3>
-            <p>
-              Your document verification process has been completed successfully. No further
-              action is required for this step.
-            </p>
-          </article>
+        {/* TWO-COLUMN GRID: TIMELINE + BOND PANEL */}
+        <section className="onboard-grid" aria-label="Onboarding checklist">
+          {/* LEFT: vertical stepper */}
+          <div className="onboard-timeline">
+            <div className="onboard-timeline-line" aria-hidden="true" />
+            <article className="onboard-step onboard-step-complete">
+              <div className="onboard-step-bullet">
+                <span className="onboard-step-icon">✓</span>
+              </div>
+              <div className="onboard-step-body">
+                <div className="onboard-step-header">
+                  <h3>Documents Verification</h3>
+                  <span className="onboard-step-status success">Completed</span>
+                </div>
+                <p>
+                  All required documents have been reviewed and verified. You are fully
+                  cleared for this step.
+                </p>
+              </div>
+            </article>
 
-          <article className="verification-card verification-card-success">
-            <div className="verification-card-top">
-              <div className="verification-icon">✓</div>
-              <span className="verification-status verification-status-success">Completed</span>
-            </div>
-            <h3>Background Verification</h3>
-            <p>
-              Your background verification has been completed successfully and approved by
-              the onboarding team.
-            </p>
-          </article>
+            <article className="onboard-step onboard-step-complete">
+              <div className="onboard-step-bullet">
+                <span className="onboard-step-icon">✓</span>
+              </div>
+              <div className="onboard-step-body">
+                <div className="onboard-step-header">
+                  <h3>Background Verification</h3>
+                  <span className="onboard-step-status success">Completed</span>
+                </div>
+                <p>
+                  Background verification has been successfully completed and approved by
+                  the onboarding team.
+                </p>
+              </div>
+            </article>
 
-          <article className="verification-card verification-card-pending">
-            <div className="verification-card-top">
-              <div className="verification-icon">!</div>
-              <span className="verification-status verification-status-pending">Pending</span>
+            <article className="onboard-step onboard-step-pending">
+              <div className="onboard-step-bullet">
+                <span className="onboard-step-icon pending">!</span>
+              </div>
+              <div className="onboard-step-body">
+                <div className="onboard-step-header">
+                  <h3>Bond Agreement Submission</h3>
+                  <span className="onboard-step-status pending">Pending</span>
+                </div>
+                <p>
+                  Please review, sign and submit the bond / service agreement before the
+                  deadline to avoid activation delays.
+                </p>
+              </div>
+            </article>
+          </div>
+
+          {/* RIGHT: bond detail panel */}
+          <aside className="onboard-bond-card" aria-label="Bond agreement details">
+            <div className="onboard-bond-header">
+              <span className="onboard-bond-label">Step 3 · Action required</span>
+              <div className="onboard-bond-pulse" aria-hidden="true" />
             </div>
-            <h3>Bond Agreement Submission</h3>
-            <p>
-              Bond agreement submission is still pending. Please complete and submit it before
-              the final deadline to proceed with platform activation.
+            <h3 className="onboard-bond-title">Submit your bond agreement</h3>
+            <p className="onboard-bond-text">
+              Download the service agreement shared with you, sign it as per the
+              instructions, and submit it through the official channel or portal
+              communicated by the onboarding team.
             </p>
-            <div className="verification-deadline">
-              Deadline: <strong>8 June, 11:59 PM</strong>
+
+            <ul className="onboard-bond-list">
+              >Ensure all pages are signed wherever required.</li>
+              >Use your registered full name and contact details.</li>
+              >
+                Keep a digital copy for your records once submission is complete.
+              </li>
+            </ul>
+
+            <div className="onboard-bond-footer">
+              <div className="onboard-deadline-pill">
+                <span className="onboard-deadline-dot" />
+                <span className="onboard-deadline-text">
+                  Deadline: <strong>8 June, 11:59 PM</strong>
+                </span>
+              </div>
+              <p className="onboard-bond-note">
+                After successful verification of the agreement, your E-Learning Platform
+                will be activated with full training access.
+              </p>
             </div>
-          </article>
+          </aside>
         </section>
 
-        <section className="activation-message-section" aria-labelledby="activation-message-title">
-          <div className="activation-message-card">
-            <div className="activation-message-icon">📘</div>
-            <div className="activation-message-content">
-              <h3 id="activation-message-title">Platform Activation Notice</h3>
+        {/* BOTTOM INFO STRIP */}
+        <section
+          className="onboard-footer-strip"
+          aria-labelledby="activation-notice-title"
+        >
+          <div className="onboard-footer-card">
+            <div className="onboard-footer-icon">☑️</div>
+            <div className="onboard-footer-content">
+              <h3 id="activation-notice-title">Platform activation notice</h3>
               <p>
-                Once you submit the <strong>Service Agreement</strong>, your E-Learning Platform
-                will be activated with your training modules and learning access.
+                Once you submit the <strong>Service Agreement</strong>, your ManPower
+                E-Learning Platform will be activated with your training modules,
+                assessments and learning resources.
               </p>
             </div>
           </div>
