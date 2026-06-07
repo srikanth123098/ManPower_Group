@@ -1762,12 +1762,8 @@ body::before {
 
 
 
-
-
-
 /* =======================================================
-   ULTRA-PRO ONBOARDING DASHBOARD LAYOUT
-   (uses existing color + spacing tokens)
+   ENTERPRISE ONBOARDING DASHBOARD – LAYOUT & MOTION
 ======================================================= */
 
 @keyframes onboardFadeUp {
@@ -1787,33 +1783,19 @@ body::before {
   }
 }
 
-@keyframes onboardPulseRing {
-  0% {
-    transform: scale(1);
-    opacity: 0.9;
-  }
-  100% {
-    transform: scale(1.7);
-    opacity: 0;
-  }
-}
-
-/* layout shell */
-
+/* Dashboard container spacing */
 .onboard-layout {
-  padding-block: var(--sp-6) var(--sp-12);
+  padding-block: var(--sp-6) var(--sp-10);
   display: flex;
   flex-direction: column;
   gap: var(--sp-6);
-  position: relative;
 }
 
-/* summary header strip */
-
+/* Top summary header */
 .onboard-header {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 2.2fr) minmax(0, 1.5fr);
+  grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.6fr);
   gap: var(--sp-6);
   padding: var(--sp-6);
   border-radius: 32px;
@@ -1821,22 +1803,10 @@ body::before {
     radial-gradient(circle at 0% 0%, rgba(129, 140, 248, 0.35), transparent 55%),
     radial-gradient(circle at 100% 100%, rgba(236, 72, 153, 0.32), transparent 55%),
     linear-gradient(135deg, #0f172a, #020617);
-  color: var(--text-white);
-  box-shadow: 0 22px 70px rgba(15, 23, 42, 0.5);
+  color: #f9fafb;
+  box-shadow: 0 22px 60px rgba(15, 23, 42, 0.5);
   overflow: hidden;
-  animation: onboardFadeUp 700ms cubic-bezier(0.16, 1, 0.3, 1) 40ms both;
-}
-
-.onboard-header::before {
-  content: "";
-  position: absolute;
-  inset: -40%;
-  background:
-    radial-gradient(circle at 0% 0%, rgba(56, 189, 248, 0.28), transparent 55%),
-    radial-gradient(circle at 100% 0%, rgba(248, 250, 252, 0.08), transparent 55%);
-  mix-blend-mode: soft-light;
-  opacity: 0.9;
-  pointer-events: none;
+  animation: onboardFadeUp 680ms cubic-bezier(0.16, 1, 0.3, 1) 40ms both;
 }
 
 .onboard-header-main {
@@ -1850,11 +1820,11 @@ body::before {
   gap: 0.5rem;
   padding: 0.3rem 0.9rem;
   border-radius: 999px;
-  background: rgba(15, 23, 42, 0.8);
-  border: 1px solid rgba(148, 163, 184, 0.6);
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(148, 163, 184, 0.7);
   font-size: 0.7rem;
   text-transform: uppercase;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.18em;
   font-weight: 600;
 }
 
@@ -1863,7 +1833,7 @@ body::before {
   height: 8px;
   border-radius: 999px;
   background: #22c55e;
-  box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.33);
+  box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.3);
 }
 
 .onboard-title {
@@ -1879,11 +1849,11 @@ body::before {
   max-width: 36rem;
   font-size: 0.98rem;
   line-height: 1.7;
+  color: #e5e7eb;
   opacity: 0.9;
 }
 
-/* metric chips */
-
+/* Metrics on right */
 .onboard-header-meta {
   position: relative;
   z-index: 1;
@@ -1898,14 +1868,14 @@ body::before {
   border-radius: 20px;
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
-  background: rgba(15, 23, 42, 0.6);
+  background: rgba(15, 23, 42, 0.7);
   border: 1px solid rgba(148, 163, 184, 0.7);
-  box-shadow: 0 14px 40px rgba(15, 23, 42, 0.55);
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.6);
 }
 
 .onboard-metric.bordered {
-  border: 1px solid rgba(251, 191, 36, 0.9);
-  box-shadow: 0 16px 55px rgba(251, 191, 36, 0.5);
+  border-color: rgba(251, 191, 36, 0.9);
+  box-shadow: 0 18px 50px rgba(251, 191, 36, 0.55);
 }
 
 .onboard-metric-label {
@@ -1918,7 +1888,7 @@ body::before {
 
 .onboard-metric-value {
   display: block;
-  margin-top: 0.4rem;
+  margin-top: 0.35rem;
   font-size: 1.3rem;
   font-weight: 700;
 }
@@ -1933,8 +1903,7 @@ body::before {
   opacity: 0.9;
 }
 
-/* main grid */
-
+/* Main grid under header */
 .onboard-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.7fr) minmax(0, 1.3fr);
@@ -1942,8 +1911,7 @@ body::before {
   align-items: flex-start;
 }
 
-/* vertical timeline */
-
+/* Vertical timeline */
 .onboard-timeline {
   position: relative;
   padding-left: 1.75rem;
@@ -1961,18 +1929,17 @@ body::before {
   width: 2px;
   background: linear-gradient(
     to bottom,
-    rgba(34, 197, 94, 0.6),
-    rgba(251, 191, 36, 0.5)
+    rgba(34, 197, 94, 0.7),
+    rgba(234, 179, 8, 0.6)
   );
-  opacity: 0.7;
+  opacity: 0.8;
 }
 
 .onboard-step {
-  position: relative;
   border-radius: 22px;
   padding: var(--sp-4);
   background: rgba(255, 255, 255, 0.96);
-  border: 1px solid rgba(148, 163, 184, 0.4);
+  border: 1px solid rgba(148, 163, 184, 0.35);
   box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
@@ -1982,7 +1949,7 @@ body::before {
   transition:
     transform 220ms cubic-bezier(0.16, 1, 0.3, 1),
     box-shadow 220ms cubic-bezier(0.16, 1, 0.3, 1),
-    border-color 220ms ease-out;
+    border-color 220ms ease;
 }
 
 .onboard-step:hover {
@@ -1995,7 +1962,7 @@ body::before {
   width: 28px;
   height: 28px;
   border-radius: 999px;
-  background: rgba(226, 232, 240, 0.9);
+  background: rgba(226, 232, 240, 0.95);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2006,9 +1973,9 @@ body::before {
 .onboard-step-bullet::before {
   content: "";
   position: absolute;
-  inset: -5px;
+  inset: -4px;
   border-radius: inherit;
-  border: 1px solid rgba(148, 163, 184, 0.4);
+  border: 1px solid rgba(148, 163, 184, 0.5);
 }
 
 .onboard-step-icon {
@@ -2024,7 +1991,7 @@ body::before {
 .onboard-step-body {
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  gap: 0.4rem;
 }
 
 .onboard-step-header {
@@ -2058,7 +2025,7 @@ body::before {
 }
 
 .onboard-step-status.pending {
-  background: rgba(234, 179, 8, 0.1);
+  background: rgba(234, 179, 8, 0.12);
   color: #92400e;
   border: 1px solid rgba(234, 179, 8, 0.55);
 }
@@ -2069,22 +2036,21 @@ body::before {
   color: var(--text-medium);
 }
 
-/* bond detail panel */
-
+/* Bond detail card */
 .onboard-bond-card {
   border-radius: 24px;
   padding: var(--sp-5);
   background:
     radial-gradient(circle at 0% 0%, rgba(56, 189, 248, 0.16), transparent 50%),
-    radial-gradient(circle at 100% 100%, rgba(251, 191, 36, 0.18), transparent 55%),
+    radial-gradient(circle at 100% 100%, rgba(251, 191, 36, 0.2), transparent 55%),
     linear-gradient(135deg, #0f172a, #020617);
-  color: var(--text-white);
+  color: #e5e7eb;
   border: 1px solid rgba(148, 163, 184, 0.6);
   box-shadow: 0 22px 70px rgba(15, 23, 42, 0.6);
   display: flex;
   flex-direction: column;
   gap: var(--sp-3);
-  animation: onboardFadeUp 720ms cubic-bezier(0.16, 1, 0.3, 1) 160ms both;
+  animation: onboardFadeUp 720ms cubic-bezier(0.16, 1, 0.3, 1) 120ms both;
 }
 
 .onboard-bond-header {
@@ -2106,17 +2072,6 @@ body::before {
   height: 12px;
   border-radius: 999px;
   background: #f97316;
-  position: relative;
-}
-
-.onboard-bond-pulse::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: rgba(248, 250, 252, 0.85);
-  mix-blend-mode: soft-light;
-  animation: onboardPulseRing 1300ms ease-out infinite;
 }
 
 .onboard-bond-title {
@@ -2127,15 +2082,14 @@ body::before {
 .onboard-bond-text {
   font-size: 0.92rem;
   line-height: 1.7;
-  opacity: 0.92;
+  opacity: 0.95;
 }
 
 .onboard-bond-list {
-  margin-top: 0.25rem;
   padding-left: 1.1rem;
   font-size: 0.9rem;
   line-height: 1.7;
-  opacity: 0.94;
+  opacity: 0.95;
 }
 
 .onboard-bond-list li + li {
@@ -2168,18 +2122,13 @@ body::before {
   background: #f97316;
 }
 
-.onboard-deadline-text {
-  font-weight: 500;
-}
-
 .onboard-bond-note {
   font-size: 0.86rem;
   line-height: 1.7;
   opacity: 0.9;
 }
 
-/* footer strip */
-
+/* Footer strip under main grid */
 .onboard-footer-strip {
   margin-top: var(--sp-2);
 }
@@ -2193,7 +2142,6 @@ body::before {
   display: flex;
   align-items: center;
   gap: var(--sp-3);
-  animation: onboardFadeUp 760ms cubic-bezier(0.16, 1, 0.3, 1) 220ms both;
 }
 
 .onboard-footer-icon {
@@ -2205,14 +2153,13 @@ body::before {
   justify-content: center;
   background: var(--grad-primary);
   color: #f9fafb;
-  box-shadow: 0 14px 40px rgba(79, 70, 229, 0.55);
 }
 
 .onboard-footer-content h3 {
   font-size: 1rem;
   font-weight: 700;
   color: var(--text-dark);
-  margin-bottom: 0.2rem;
+  margin-bottom: 0.25rem;
 }
 
 .onboard-footer-content p {
@@ -2221,8 +2168,7 @@ body::before {
   color: var(--text-medium);
 }
 
-/* responsive */
-
+/* Responsive behaviour */
 @media (max-width: 1024px) {
   .onboard-header {
     grid-template-columns: minmax(0, 1fr);
@@ -2230,7 +2176,6 @@ body::before {
 
   .onboard-header-meta {
     flex-direction: row;
-    align-items: stretch;
   }
 
   .onboard-metric {
@@ -2247,18 +2192,18 @@ body::before {
 }
 
 @media (max-width: 768px) {
+  .onboard-layout {
+    padding-block: var(--sp-4) var(--sp-8);
+  }
+
   .onboard-header,
   .onboard-footer-card {
-    border-radius: 24px;
     padding: var(--sp-4);
+    border-radius: 24px;
   }
 
   .onboard-header-meta {
     flex-direction: column;
-  }
-
-  .onboard-layout {
-    padding-block: var(--sp-4) var(--sp-8);
   }
 
   .onboard-timeline {
@@ -2266,6 +2211,7 @@ body::before {
   }
 
   .onboard-footer-card {
+    flex-direction: column;
     align-items: flex-start;
   }
 }
