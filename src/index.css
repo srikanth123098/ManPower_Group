@@ -2247,3 +2247,126 @@ body::before {
     align-items: flex-start;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* STEP 3 – Bond Agreement card (light, enterprise style) */
+
+.onboard-bond-card {
+  position: relative;
+  border-radius: 24px;
+  padding: var(--sp-5);
+  background: #ffffff;
+  border: 1px solid rgba(148, 163, 184, 0.45);
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  animation: onboardFadeUp 600ms cubic-bezier(0.16, 1, 0.3, 1) 70ms both;
+  overflow: hidden;
+}
+
+/* Thin gradient accent strip at the top */
+.onboard-bond-card::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #22c55e, #22d3ee, #fbbf24);
+}
+
+/* Header row: label + nothing else for now */
+.onboard-bond-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.onboard-bond-label {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.8rem;
+  border-radius: 999px;
+  background: rgba(37, 99, 235, 0.06);
+  border: 1px solid rgba(37, 99, 235, 0.2);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #1d4ed8;
+}
+
+/* Main title + text */
+.onboard-bond-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.onboard-bond-text {
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: var(--text-medium);
+}
+
+/* Bullet list */
+.onboard-bond-list {
+  padding-left: 1.1rem;
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--text-medium);
+}
+
+.onboard-bond-list li + li {
+  margin-top: 0.35rem;
+}
+
+/* Bottom section: deadline + note */
+.onboard-bond-footer {
+  margin-top: var(--sp-4);
+  padding-top: var(--sp-3);
+  border-top: 1px solid rgba(226, 232, 240, 0.9);
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.onboard-deadline-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  align-self: flex-start;
+  padding: 0.35rem 0.95rem;
+  border-radius: 999px;
+  background: #fffbeb;
+  border: 1px solid #facc15;
+  font-size: 0.8rem;
+  color: #92400e;
+}
+
+.onboard-deadline-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #f97316;
+}
+
+.onboard-bond-note {
+  font-size: 0.86rem;
+  line-height: 1.7;
+  color: var(--text-medium);
+}
