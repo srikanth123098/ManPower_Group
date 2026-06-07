@@ -1,3 +1,4 @@
+// src/pages/Dashboard.jsx
 import React, { useEffect, useState } from 'react';
 import API from '../api';
 import Branding from '../components/Branding';
@@ -293,7 +294,7 @@ export default function Dashboard({ setAuthed }) {
     );
   }
 
-  // DASHBOARD TAB – ONLY LAYOUT CHANGED, LOGIC UNTOUCHED
+  // DASHBOARD TAB – new layout + footer, logic unchanged
   return (
     <>
       <div className="orb orb-1" aria-hidden="true"></div>
@@ -339,9 +340,8 @@ export default function Dashboard({ setAuthed }) {
         </button>
       </div>
 
-      {/* NEW ULTRA-PRO LAYOUT – DOES NOT TOUCH YOUR DATA LOGIC */}
       <div className="container onboard-layout" aria-live="polite">
-        {/* HEADER STRIP */}
+        {/* TOP SUMMARY HEADER */}
         <section className="onboard-header" aria-labelledby="onboard-title">
           <div className="onboard-header-main">
             <div className="onboard-chip">
@@ -476,6 +476,38 @@ export default function Dashboard({ setAuthed }) {
           </div>
         </section>
       </div>
+
+      {/* GLOBAL FOOTER FOR DASHBOARD TAB */}
+      <footer className="site-footer">
+        <div className="site-footer-inner">
+          <div className="site-footer-brand">
+            <div className="site-footer-title">ManPower E-Learning Academy</div>
+            <p>
+              Structured learning journeys, verified onboarding, and industry-aligned
+              training modules to accelerate your career.
+            </p>
+          </div>
+          <div className="site-footer-columns">
+            <div>
+              <h4>Support</h4>
+              <p>Email: support@manpower-elearning.com</p>
+              <p>Hours: 9:00 AM – 6:00 PM (IST)</p>
+            </div>
+            <div>
+              <h4>Platform</h4>
+              <p>Secure onboarding, curated content, and proctored assessments.</p>
+            </div>
+            <div>
+              <h4>Legal</h4>
+              <p>Terms of Use · Privacy Policy</p>
+            </div>
+          </div>
+        </div>
+        <div className="site-footer-bottom">
+          <span>© {new Date().getFullYear()} ManPower E-Learning Academy</span>
+          <span>All rights reserved.</span>
+        </div>
+      </footer>
     </>
   );
 }
