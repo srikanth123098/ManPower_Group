@@ -490,7 +490,7 @@ export default function Dashboard({ setAuthed }) {
           <div className="site-footer-columns">
             <div>
               <h4>Support</h4>
-              <p>Email: support@manpower-elearning.com</p>
+              <p>Email: hr-manpower-group@zohomail.in</p>
               <p>Hours: 9:00 AM – 6:00 PM (IST)</p>
             </div>
             <div>
