@@ -17,7 +17,7 @@ export default function Login({ setAuthed }) {
     try {
       const res = await API.post('/api/auth/login', { email, password });
       const token = res?.data?.token || 'fixed-demo-token';
-      const user = res?.data?.user || { name: 'Akula Chandra Sekhar', email };
+      const user = res?.data?.user || { name: 'Daram Sai Jaswanth Reddy', email };
 
       localStorage.setItem('token', token);
       try {
