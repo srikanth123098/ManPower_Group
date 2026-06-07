@@ -1,263 +1,270 @@
-/* ================================
-   DASHBOARD ACTIVATION SECTION
-================================ */
+import React, { useState } from 'react';
+import Branding from '../components/Branding';
+import CourseRoadmap from './CourseRoadmap';
 
-.activation-hero {
-  display: grid;
-  grid-template-columns: 1.6fr 1fr;
-  gap: 2rem;
-  align-items: stretch;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-}
-
-.activation-hero-content,
-.activation-progress-card,
-.verification-card,
-.activation-message-card {
-  background: rgba(255, 255, 255, 0.88);
-  backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.45);
-  border-radius: 24px;
-  box-shadow: 0 18px 50px rgba(15, 23, 42, 0.08);
-}
-
-.activation-hero-content {
-  padding: 2rem;
-}
-
-.activation-badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.45rem 0.9rem;
-  border-radius: 999px;
-  background: rgba(99, 102, 241, 0.12);
-  color: #4f46e5;
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  margin-bottom: 1rem;
-}
-
-.activation-title {
-  font-size: clamp(1.8rem, 3vw, 2.8rem);
-  line-height: 1.15;
-  font-weight: 800;
-  color: var(--text-dark);
-  margin-bottom: 1rem;
-}
-
-.activation-description {
-  font-size: 1rem;
-  line-height: 1.7;
-  color: var(--text-medium);
-  max-width: 60ch;
-}
-
-.activation-progress-card {
-  padding: 1.75rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.activation-progress-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 1rem;
-  font-size: 0.95rem;
-  color: var(--text-medium);
-}
-
-.activation-progress-top strong {
-  color: var(--text-dark);
-  font-size: 1rem;
-}
-
-.activation-progress-bar {
-  width: 100%;
-  height: 12px;
-  border-radius: 999px;
-  background: rgba(148, 163, 184, 0.22);
-  overflow: hidden;
-  margin-bottom: 1rem;
-}
-
-.activation-progress-fill {
-  width: 66.66%;
-  height: 100%;
-  border-radius: inherit;
-  background: linear-gradient(90deg, #10b981, #34d399);
-}
-
-.activation-progress-note {
-  font-size: 0.95rem;
-  line-height: 1.6;
-  color: var(--text-medium);
-}
-
-.verification-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 2rem;
-}
-
-.verification-card {
-  padding: 1.5rem;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.verification-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 22px 60px rgba(15, 23, 42, 0.12);
-}
-
-.verification-card-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-
-.verification-icon {
-  width: 46px;
-  height: 46px;
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.1rem;
-  font-weight: 800;
-}
-
-.verification-card-success .verification-icon {
-  background: rgba(16, 185, 129, 0.12);
-  color: #059669;
-}
-
-.verification-card-pending .verification-icon {
-  background: rgba(245, 158, 11, 0.14);
-  color: #d97706;
-}
-
-.verification-status {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.4rem 0.8rem;
-  border-radius: 999px;
-  font-size: 0.76rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
-.verification-status-success {
-  background: rgba(16, 185, 129, 0.12);
-  color: #047857;
-}
-
-.verification-status-pending {
-  background: rgba(245, 158, 11, 0.16);
-  color: #b45309;
-}
-
-.verification-card h3 {
-  font-size: 1.1rem;
-  color: var(--text-dark);
-  margin-bottom: 0.75rem;
-}
-
-.verification-card p {
-  font-size: 0.96rem;
-  line-height: 1.65;
-  color: var(--text-medium);
-}
-
-.verification-deadline {
-  margin-top: 1rem;
-  padding: 0.85rem 1rem;
-  border-radius: 14px;
-  background: rgba(245, 158, 11, 0.1);
-  color: #92400e;
-  font-size: 0.92rem;
-  font-weight: 600;
-}
-
-.activation-message-section {
-  margin-bottom: 2rem;
-}
-
-.activation-message-card {
-  padding: 1.5rem 1.75rem;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.activation-message-icon {
-  width: 58px;
-  height: 58px;
-  flex-shrink: 0;
-  border-radius: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(99, 102, 241, 0.12);
-  font-size: 1.5rem;
-}
-
-.activation-message-content h3 {
-  font-size: 1.15rem;
-  color: var(--text-dark);
-  margin-bottom: 0.45rem;
-}
-
-.activation-message-content p {
-  font-size: 0.98rem;
-  line-height: 1.7;
-  color: var(--text-medium);
-}
-
-@media (max-width: 992px) {
-  .activation-hero {
-    grid-template-columns: 1fr;
-  }
-
-  .verification-grid {
-    grid-template-columns: 1fr;
+function safeGetUser() {
+  try {
+    const raw = localStorage.getItem('user');
+    if (!raw) return { name: 'Akula Chandra Sekhar', email: 'MPGCAT@0078' };
+    if (raw.trim() === '') return { name: 'Akula Chandra Sekhar', email: 'MPGCAT@0078' };
+    const parsed = JSON.parse(raw);
+    if (!parsed || typeof parsed !== 'object') {
+      return { name: 'Akula Chandra Sekhar', email: 'MPGCAT@0078' };
+    }
+    return {
+      name: parsed.name || 'Akula Chandra Sekhar',
+      email: parsed.email || 'MPGCAT@0078'
+    };
+  } catch (err) {
+    console.warn('safeGetUser parse error', err);
+    return { name: 'Akula Chandra Sekhar', email: 'MPGCAT@0078' };
   }
 }
 
-@media (max-width: 640px) {
-  .activation-hero-content,
-  .activation-progress-card,
-  .verification-card,
-  .activation-message-card {
-    border-radius: 20px;
+export default function Dashboard({ setAuthed }) {
+  const user = safeGetUser();
+  const [activeTab, setActiveTab] = useState('dashboard');
+
+  function handleLogout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    if (typeof setAuthed === 'function') setAuthed(false);
+    window.location.hash = '#/';
   }
 
-  .activation-hero-content,
-  .activation-progress-card,
-  .verification-card,
-  .activation-message-card {
-    padding: 1.25rem;
+  // RENDER COURSES TAB
+  if (activeTab === 'courses') {
+    return (
+      <>
+        <header className="header" role="banner">
+          <div className="header-container">
+            <Branding />
+            <div className="welcome">
+              <div className="kicker">Welcome Back</div>
+              <div className="username">{user.name}</div>
+            </div>
+            <button className="logout" onClick={handleLogout} aria-label="Logout">
+              <span>Logout</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                <polyline points="16 17 21 12 16 7"></polyline>
+                <line x1="21" y1="12" x2="9" y2="12"></line>
+              </svg>
+            </button>
+          </div>
+        </header>
+
+        <div className="tab-navigation">
+          <button
+            className={`tab-btn ${activeTab === 'dashboard' ? 'active' : ''}`}
+            onClick={() => setActiveTab('dashboard')}
+          >
+            📊 Dashboard
+          </button>
+          <button
+            className={`tab-btn ${activeTab === 'courses' ? 'active' : ''}`}
+            onClick={() => setActiveTab('courses')}
+          >
+            📚 Courses
+          </button>
+          <button
+            className={`tab-btn ${activeTab === 'exams' ? 'active' : ''}`}
+            onClick={() => setActiveTab('exams')}
+          >
+            📝 Exams
+          </button>
+        </div>
+
+        <CourseRoadmap />
+      </>
+    );
   }
 
-  .activation-title {
-    font-size: 1.6rem;
+  // RENDER EXAMS TAB
+  if (activeTab === 'exams') {
+    return (
+      <>
+        <header className="header" role="banner">
+          <div className="header-container">
+            <Branding />
+            <div className="welcome">
+              <div className="kicker">Welcome Back</div>
+              <div className="username">{user.name}</div>
+            </div>
+            <button className="logout" onClick={handleLogout} aria-label="Logout">
+              <span>Logout</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                <polyline points="16 17 21 12 16 7"></polyline>
+                <line x1="21" y1="12" x2="9" y2="12"></line>
+              </svg>
+            </button>
+          </div>
+        </header>
+
+        <div className="tab-navigation">
+          <button
+            className={`tab-btn ${activeTab === 'dashboard' ? 'active' : ''}`}
+            onClick={() => setActiveTab('dashboard')}
+          >
+            📊 Dashboard
+          </button>
+          <button
+            className={`tab-btn ${activeTab === 'courses' ? 'active' : ''}`}
+            onClick={() => setActiveTab('courses')}
+          >
+            📚 Courses
+          </button>
+          <button
+            className={`tab-btn ${activeTab === 'exams' ? 'active' : ''}`}
+            onClick={() => setActiveTab('exams')}
+          >
+            📝 Exams
+          </button>
+        </div>
+
+        <div className="coming-soon-page">
+          <div className="coming-soon-content">
+            <div className="coming-soon-icon">🚀</div>
+            <h1>Exams Coming Soon!</h1>
+            <p>We're preparing comprehensive assessments to test your knowledge.</p>
+            <p className="coming-soon-subtext">Stay tuned for updates!</p>
+            <button className="btn-primary" onClick={() => setActiveTab('dashboard')}>
+              ← Back to Dashboard
+            </button>
+          </div>
+        </div>
+      </>
+    );
   }
 
-  .activation-message-card {
-    flex-direction: column;
-    align-items: flex-start;
-  }
+  // DEFAULT: RENDER DASHBOARD TAB
+  return (
+    <>
+      <div className="orb orb-1" aria-hidden="true"></div>
+      <div className="orb orb-2" aria-hidden="true"></div>
+      <div className="orb orb-3" aria-hidden="true"></div>
 
-  .activation-progress-top {
-    flex-direction: column;
-    align-items: flex-start;
-  }
+      <header className="header" role="banner">
+        <div className="header-container">
+          <Branding />
+          <div className="welcome">
+            <div className="kicker">Welcome Back</div>
+            <div className="username">{user.name}</div>
+          </div>
+          <button className="logout" onClick={handleLogout} aria-label="Logout">
+            <span>Logout</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+              <polyline points="16 17 21 12 16 7"></polyline>
+              <line x1="21" y1="12" x2="9" y2="12"></line>
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <div className="tab-navigation">
+        <button
+          className={`tab-btn ${activeTab === 'dashboard' ? 'active' : ''}`}
+          onClick={() => setActiveTab('dashboard')}
+        >
+          📊 Dashboard
+        </button>
+        <button
+          className={`tab-btn ${activeTab === 'courses' ? 'active' : ''}`}
+          onClick={() => setActiveTab('courses')}
+        >
+          📚 Courses
+        </button>
+        <button
+          className={`tab-btn ${activeTab === 'exams' ? 'active' : ''}`}
+          onClick={() => setActiveTab('exams')}
+        >
+          📝 Exams
+        </button>
+      </div>
+
+      <div className="container" aria-live="polite">
+        <section className="activation-hero" aria-labelledby="activation-title">
+          <div className="activation-hero-content">
+            <span className="activation-badge">ONBOARDING STATUS</span>
+            <h2 id="activation-title" className="activation-title">
+              Your onboarding is almost complete
+            </h2>
+            <p className="activation-description">
+              Please review your current verification status below. Your E-Learning Platform
+              will be activated once the service agreement is successfully submitted.
+            </p>
+          </div>
+
+          <div className="activation-progress-card">
+            <div className="activation-progress-top">
+              <span>Completion Status</span>
+              <strong>2 of 3 completed</strong>
+            </div>
+            <div className="activation-progress-bar">
+              <div className="activation-progress-fill"></div>
+            </div>
+            <p className="activation-progress-note">
+              Submit the pending agreement before the deadline to unlock training access.
+            </p>
+          </div>
+        </section>
+
+        <section className="verification-grid" aria-label="Verification checklist">
+          <article className="verification-card verification-card-success">
+            <div className="verification-card-top">
+              <div className="verification-icon">✓</div>
+              <span className="verification-status verification-status-success">Completed</span>
+            </div>
+            <h3>Documents Verification</h3>
+            <p>
+              Your document verification process has been completed successfully. No further
+              action is required for this step.
+            </p>
+          </article>
+
+          <article className="verification-card verification-card-success">
+            <div className="verification-card-top">
+              <div className="verification-icon">✓</div>
+              <span className="verification-status verification-status-success">Completed</span>
+            </div>
+            <h3>Background Verification</h3>
+            <p>
+              Your background verification has been completed successfully and approved by
+              the onboarding team.
+            </p>
+          </article>
+
+          <article className="verification-card verification-card-pending">
+            <div className="verification-card-top">
+              <div className="verification-icon">!</div>
+              <span className="verification-status verification-status-pending">Pending</span>
+            </div>
+            <h3>Bond Agreement Submission</h3>
+            <p>
+              Bond agreement submission is still pending. Please complete and submit it before
+              the final deadline to proceed with platform activation.
+            </p>
+            <div className="verification-deadline">
+              Deadline: <strong>8 June, 11:59 PM</strong>
+            </div>
+          </article>
+        </section>
+
+        <section className="activation-message-section" aria-labelledby="activation-message-title">
+          <div className="activation-message-card">
+            <div className="activation-message-icon">📘</div>
+            <div className="activation-message-content">
+              <h3 id="activation-message-title">Platform Activation Notice</h3>
+              <p>
+                Once you submit the <strong>Service Agreement</strong>, your E-Learning Platform
+                will be activated with your training modules and learning access.
+              </p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </>
+  );
 }
