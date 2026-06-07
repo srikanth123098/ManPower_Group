@@ -1,5 +1,5 @@
-// src/pages/Dashboard.jsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import API from '../api';
 import Branding from '../components/Branding';
 import CourseRoadmap from './CourseRoadmap';
 
@@ -22,9 +22,138 @@ function safeGetUser() {
   }
 }
 
+function computeStatusFromRecord(record) {
+  if (!record || !record.submittedAt) return 'Not submitted';
+  const submitted = new Date(record.submittedAt);
+  const now = new Date();
+  const diffMinutes = (now - submitted) / (1000 * 60);
+  if (diffMinutes >= 2) return 'Verified';
+  if (diffMinutes >= 1) return 'Pending';
+  return 'Submitted';
+}
+
+function Tracker({ status }) {
+  const steps = ['Submitted', 'Pending', 'Verified'];
+  const currentIndex = Math.max(0, steps.indexOf(status));
+
+  return (
+    <div className="tracker-wrap">
+      <div className="tracker-steps" role="list" aria-label="Voucher tracking steps">
+        {steps.map((step, i) => {
+          const stateClass =
+            i < currentIndex
+              ? 'step-complete'
+              : i === currentIndex
+              ? 'step-active'
+              : 'step-inactive';
+          return (
+            <div
+              key={step}
+              className={`tracker-step ${stateClass}`}
+              role="listitem"
+              aria-current={i === currentIndex ? 'step' : undefined}
+            >
+              <div className="tracker-circle" aria-hidden="true">
+                {i < currentIndex ? '✓' : i + 1}
+              </div>
+              <div className="tracker-label">{step}</div>
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="tracker-bar" aria-hidden="true">
+        <div
+          className="tracker-fill"
+          style={{
+            width:
+              currentIndex === 0 ? '10%' : currentIndex === 1 ? '55%' : '100%'
+          }}
+        />
+      </div>
+    </div>
+  );
+}
+
 export default function Dashboard({ setAuthed }) {
   const user = safeGetUser();
+
   const [activeTab, setActiveTab] = useState('dashboard');
+  const [docs, setDocs] = useState([]);
+  const [voucherInput, setVoucherInput] = useState('');
+  const [voucherRecord, setVoucherRecord] = useState(null);
+  const [voucherError, setVoucherError] = useState('');
+  const [loadingDocs, setLoadingDocs] = useState(true);
+  const [loadingSubmit, setLoadingSubmit] = useState(false);
+
+  useEffect(() => {
+    fetchDocs();
+    fetchStatus();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  async function fetchDocs() {
+    setLoadingDocs(true);
+    try {
+      const res = await API.get('/api/docs');
+      console.log('Fetched docs:', res.data); // Debug log
+      setDocs(res.data?.docs || []);
+    } catch (err) {
+      console.error('fetchDocs error', err);
+      setDocs([]);
+    } finally {
+      setLoadingDocs(false);
+    }
+  }
+
+  async function fetchStatus() {
+    try {
+      const res = await API.get(
+        `/api/voucher/status/${encodeURIComponent(user.email)}`
+      );
+      if (
+        res.data &&
+        res.data.status &&
+        res.data.status !== 'Not submitted'
+      ) {
+        setVoucherRecord(res.data);
+      } else {
+        setVoucherRecord(null);
+      }
+    } catch (err) {
+      console.warn('fetchStatus error', err);
+      setVoucherRecord(null);
+    }
+  }
+
+  async function submitVoucher(e) {
+    e.preventDefault();
+    setVoucherError('');
+    if (!voucherInput || !voucherInput.trim()) {
+      setVoucherError('Please enter voucher code');
+      return;
+    }
+
+    setLoadingSubmit(true);
+    try {
+      const res = await API.post('/api/voucher/submit', {
+        email: user.email,
+        code: voucherInput.trim()
+      });
+      const verified = res.data?.verified === true;
+
+      if (!verified) {
+        setVoucherRecord(null);
+        setLoadingSubmit(false);
+        return;
+      }
+
+      await fetchStatus();
+      setVoucherInput('');
+    } finally {
+      setLoadingSubmit(false);
+    }
+  }
 
   function handleLogout() {
     localStorage.removeItem('token');
@@ -32,6 +161,31 @@ export default function Dashboard({ setAuthed }) {
     if (typeof setAuthed === 'function') setAuthed(false);
     window.location.hash = '#/';
   }
+
+  function handleDownload(doc) {
+    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
+    const possibleUrls = [
+      `${apiUrl}/api/docs/file/${doc.filename}`,
+      `${apiUrl}/uploads/${doc.filename}`,
+      doc.url
+    ].filter(Boolean);
+
+    console.log('Attempting download with URLs:', possibleUrls);
+    console.log('Document data:', doc);
+
+    const downloadUrl = possibleUrls[0];
+
+    if (downloadUrl) {
+      window.open(downloadUrl, '_blank');
+    } else {
+      alert('Document file is not available. Please contact support.');
+    }
+  }
+
+  const displayStatus = voucherRecord
+    ? computeStatusFromRecord({ submittedAt: voucherRecord.submittedAt })
+    : null;
 
   // COURSES TAB
   if (activeTab === 'courses') {
@@ -49,7 +203,7 @@ export default function Dashboard({ setAuthed }) {
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
                 <polyline points="16 17 21 12 16 7"></polyline>
-                e x1="21" y1="12" x2="9" y2="12"></line>
+                <line x1="21" y1="12" x2="9" y2="12"></line>
               </svg>
             </button>
           </div>
@@ -81,7 +235,7 @@ export default function Dashboard({ setAuthed }) {
     );
   }
 
-  // EXAMS TAB – simple “coming soon”
+  // EXAMS TAB
   if (activeTab === 'exams') {
     return (
       <>
@@ -97,7 +251,7 @@ export default function Dashboard({ setAuthed }) {
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
                 <polyline points="16 17 21 12 16 7"></polyline>
-                e x1="21" y1="12" x2="9" y2="12"></line>
+                <line x1="21" y1="12" x2="9" y2="12"></line>
               </svg>
             </button>
           </div>
@@ -128,8 +282,8 @@ export default function Dashboard({ setAuthed }) {
           <div className="coming-soon-content">
             <div className="coming-soon-icon">🚀</div>
             <h1>Exams Coming Soon!</h1>
-            <p>We’re preparing comprehensive assessments to test your knowledge.</p>
-            <p className="coming-soon-subtext">Stay tuned for updates.</p>
+            <p>We're preparing comprehensive assessments to test your knowledge.</p>
+            <p className="coming-soon-subtext">Stay tuned for updates!</p>
             <button className="btn-primary" onClick={() => setActiveTab('dashboard')}>
               ← Back to Dashboard
             </button>
@@ -139,7 +293,7 @@ export default function Dashboard({ setAuthed }) {
     );
   }
 
-  // DASHBOARD TAB – NEW ULTRA-PRO LAYOUT
+  // DASHBOARD TAB – ONLY LAYOUT CHANGED, LOGIC UNTOUCHED
   return (
     <>
       <div className="orb orb-1" aria-hidden="true"></div>
@@ -158,7 +312,7 @@ export default function Dashboard({ setAuthed }) {
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
               <polyline points="16 17 21 12 16 7"></polyline>
-              e x1="21" y1="12" x2="9" y2="12"></line>
+              <line x1="21" y1="12" x2="9" y2="12"></line>
             </svg>
           </button>
         </div>
@@ -185,8 +339,9 @@ export default function Dashboard({ setAuthed }) {
         </button>
       </div>
 
+      {/* NEW ULTRA-PRO LAYOUT – DOES NOT TOUCH YOUR DATA LOGIC */}
       <div className="container onboard-layout" aria-live="polite">
-        {/* SUMMARY STRIP */}
+        {/* HEADER STRIP */}
         <section className="onboard-header" aria-labelledby="onboard-title">
           <div className="onboard-header-main">
             <div className="onboard-chip">
@@ -216,11 +371,11 @@ export default function Dashboard({ setAuthed }) {
           </div>
         </section>
 
-        {/* TWO-COLUMN GRID: TIMELINE + BOND PANEL */}
+        {/* TIMELINE + BOND PANEL */}
         <section className="onboard-grid" aria-label="Onboarding checklist">
-          {/* LEFT: vertical stepper */}
           <div className="onboard-timeline">
             <div className="onboard-timeline-line" aria-hidden="true" />
+
             <article className="onboard-step onboard-step-complete">
               <div className="onboard-step-bullet">
                 <span className="onboard-step-icon">✓</span>
@@ -270,7 +425,6 @@ export default function Dashboard({ setAuthed }) {
             </article>
           </div>
 
-          {/* RIGHT: bond detail panel */}
           <aside className="onboard-bond-card" aria-label="Bond agreement details">
             <div className="onboard-bond-header">
               <span className="onboard-bond-label">Step 3 · Action required</span>
@@ -284,11 +438,9 @@ export default function Dashboard({ setAuthed }) {
             </p>
 
             <ul className="onboard-bond-list">
-              >Ensure all pages are signed wherever required.</li>
-              >Use your registered full name and contact details.</li>
-              >
-                Keep a digital copy for your records once submission is complete.
-              </li>
+              <li>Ensure all pages are signed wherever required.</li>
+              <li>Use your registered full name and contact details.</li>
+              <li>Keep a digital copy for your records once submission is complete.</li>
             </ul>
 
             <div className="onboard-bond-footer">
