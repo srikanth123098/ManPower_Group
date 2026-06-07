@@ -7,19 +7,19 @@ import CourseRoadmap from './CourseRoadmap';
 function safeGetUser() {
   try {
     const raw = localStorage.getItem('user');
-    if (!raw) return { name: 'Akula Chandra Sekhar', email: 'MPGCAT@0078' };
-    if (raw.trim() === '') return { name: 'Akula Chandra Sekhar', email: 'MPGCAT@0078' };
+    if (!raw) return { name: 'Daram Sai Jaswanth Reddy', email: 'MPGCAT@0078' };
+    if (raw.trim() === '') return { name: 'Daram Sai Jaswanth Reddy', email: 'MPGCAT@0078' };
     const parsed = JSON.parse(raw);
     if (!parsed || typeof parsed !== 'object') {
-      return { name: 'Akula Chandra Sekhar', email: 'MPGCAT@0078' };
+      return { name: 'Daram Sai Jaswanth Reddy', email: 'MPGCAT@0078' };
     }
     return {
-      name: parsed.name || 'Akula Chandra Sekhar',
+      name: parsed.name || 'Daram Sai Jaswanth Reddy',
       email: parsed.email || 'MPGCAT@0078'
     };
   } catch (err) {
     console.warn('safeGetUser parse error', err);
-    return { name: 'Akula Chandra Sekhar', email: 'MPGCAT@0078' };
+    return { name: 'Daram Sai Jaswanth Reddy', email: 'MPGCAT@0078' };
   }
 }
 
@@ -511,3 +511,6 @@ export default function Dashboard({ setAuthed }) {
     </>
   );
 }
+
+
+
