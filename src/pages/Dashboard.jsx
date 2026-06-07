@@ -96,7 +96,7 @@ export default function Dashboard({ setAuthed }) {
     setLoadingDocs(true);
     try {
       const res = await API.get('/api/docs');
-      console.log('Fetched docs:', res.data); // Debug log
+      console.log('Fetched docs:', res.data);
       setDocs(res.data?.docs || []);
     } catch (err) {
       console.error('fetchDocs error', err);
@@ -203,7 +203,7 @@ export default function Dashboard({ setAuthed }) {
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
                 <polyline points="16 17 21 12 16 7"></polyline>
-                <line x1="21" y1="12" x2="9" y2="12"></line>
+                e x1="21" y1="12" x2="9" y2="12"></line>
               </svg>
             </button>
           </div>
@@ -231,6 +231,30 @@ export default function Dashboard({ setAuthed }) {
         </div>
 
         <CourseRoadmap />
+
+        <footer className="site-footer">
+          <div className="site-footer-inner">
+            <div className="site-footer-brand">
+              <div className="site-footer-title">ManPower E-Learning Academy</div>
+              <p>Structured training programs powered by industry-grade content and assessments.</p>
+            </div>
+            <div className="site-footer-columns">
+              <div>
+                <h4>Support</h4>
+                <p>Email: support@manpower-elearning.com</p>
+                <p>Hours: 9:00 AM – 6:00 PM (IST)</p>
+              </div>
+              <div>
+                <h4>Platform</h4>
+                <p>Secure onboarding, proctored exams, and guided learning journeys.</p>
+              </div>
+            </div>
+          </div>
+          <div className="site-footer-bottom">
+            <span>© {new Date().getFullYear()} ManPower E-Learning Academy</span>
+            <span>All rights reserved.</span>
+          </div>
+        </footer>
       </>
     );
   }
@@ -251,7 +275,7 @@ export default function Dashboard({ setAuthed }) {
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
                 <polyline points="16 17 21 12 16 7"></polyline>
-                <line x1="21" y1="12" x2="9" y2="12"></line>
+                e x1="21" y1="12" x2="9" y2="12"></line>
               </svg>
             </button>
           </div>
@@ -289,11 +313,35 @@ export default function Dashboard({ setAuthed }) {
             </button>
           </div>
         </div>
+
+        <footer className="site-footer">
+          <div className="site-footer-inner">
+            <div className="site-footer-brand">
+              <div className="site-footer-title">ManPower E-Learning Academy</div>
+              <p>Structured training programs powered by industry-grade content and assessments.</p>
+            </div>
+            <div className="site-footer-columns">
+              <div>
+                <h4>Support</h4>
+                <p>Email: support@manpower-elearning.com</p>
+                <p>Hours: 9:00 AM – 6:00 PM (IST)</p>
+              </div>
+              <div>
+                <h4>Platform</h4>
+                <p>Secure onboarding, proctored exams, and guided learning journeys.</p>
+              </div>
+            </div>
+          </div>
+          <div className="site-footer-bottom">
+            <span>© {new Date().getFullYear()} ManPower E-Learning Academy</span>
+            <span>All rights reserved.</span>
+          </div>
+        </footer>
       </>
     );
   }
 
-  // DASHBOARD TAB – ONLY LAYOUT CHANGED, LOGIC UNTOUCHED
+  // DASHBOARD TAB
   return (
     <>
       <div className="orb orb-1" aria-hidden="true"></div>
@@ -312,7 +360,7 @@ export default function Dashboard({ setAuthed }) {
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
               <polyline points="16 17 21 12 16 7"></polyline>
-              <line x1="21" y1="12" x2="9" y2="12"></line>
+              e x1="21" y1="12" x2="9" y2="12"></line>
             </svg>
           </button>
         </div>
@@ -339,7 +387,6 @@ export default function Dashboard({ setAuthed }) {
         </button>
       </div>
 
-      {/* NEW ULTRA-PRO LAYOUT – DOES NOT TOUCH YOUR DATA LOGIC */}
       <div className="container onboard-layout" aria-live="polite">
         {/* HEADER STRIP */}
         <section className="onboard-header" aria-labelledby="onboard-title">
@@ -437,10 +484,10 @@ export default function Dashboard({ setAuthed }) {
               communicated by the onboarding team.
             </p>
 
-            <ul className="onboard-bond-list">
-              <li>Ensure all pages are signed wherever required.</li>
-              <li>Use your registered full name and contact details.</li>
-              <li>Keep a digital copy for your records once submission is complete.</li>
+            <ul className="onboard-bond-listst">
+              >Ensure all pages are signed wherever required.</l/li>
+              >Use your registered full name and contact details.</l/li>
+              >Keep a digital copy for your records once submission is complete.</li>
             </ul>
 
             <div className="onboard-bond-footer">
@@ -458,7 +505,7 @@ export default function Dashboard({ setAuthed }) {
           </aside>
         </section>
 
-        {/* BOTTOM INFO STRIP */}
+        {/* FOOTER STRIP */}
         <section
           className="onboard-footer-strip"
           aria-labelledby="activation-notice-title"
@@ -476,6 +523,30 @@ export default function Dashboard({ setAuthed }) {
           </div>
         </section>
       </div>
+
+      <footer className="site-footer">
+        <div className="site-footer-inner">
+          <div className="site-footer-brand">
+            <div className="site-footer-title">ManPower E-Learning Academy</div>
+            <p>Structured training programs powered by industry-grade content and assessments.</p>
+          </div>
+          <div className="site-footer-columns">
+            <div>
+              <h4>Support</h4>
+              <p>Email: support@manpower-elearning.com</p>
+              <p>Hours: 9:00 AM – 6:00 PM (IST)</p>
+            </div>
+            <div>
+              <h4>Platform</h4>
+              <p>Secure onboarding, proctored exams, and guided learning journeys.</p>
+            </div>
+          </div>
+        </div>
+        <div className="site-footer-bottom">
+          <span>© {new Date().getFullYear()} ManPower E-Learning Academy</span>
+          <span>All rights reserved.</span>
+        </div>
+      </footer>
     </>
   );
 }
